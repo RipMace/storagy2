@@ -1,14 +1,13 @@
-import { LitElement, html} from "lit-element";
+import { LitElement, html } from "lit-element";
 import "@webcomponents/webcomponentsjs";
 
 class StoragyApp extends LitElement {
-
-    render() {
-        return html`
+  render() {
+    return html`
       <section>
         <h2>Static page</h2>
-        <p class="hello">This is a text-only page.</p>
-        <p>It doesn't do anything other than display some static text.</p>
+          <p>This is a text-only page.</p>
+          <p>It doesn't do anything other than display some static text.</p>
       </section>
       <section>
         <h2>Welcome</h2>
@@ -18,7 +17,7 @@ class StoragyApp extends LitElement {
         <p>Vestibulum at est ex. Aenean id ligula id nibh dictum laoreet. Etiam non semper erat. Pellentesque eu justo rhoncus diam vulputate facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam feugiat metus ex, vel fringilla massa tincidunt sit amet. Nunc facilisis bibendum tristique. Mauris commodo, dolor vitae dapibus fermentum, odio nibh viverra lorem, eu cursus diam turpis et sapien. Nunc suscipit tortor a ligula tincidunt, id hendrerit tellus sollicitudin.</p>
       </section>
     `;
-    }
+  }
 }
 
 window.customElements.define("storagy-app", StoragyApp);

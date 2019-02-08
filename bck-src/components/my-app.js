@@ -21,9 +21,9 @@ import { store } from "../store.js";
 
 // These are the actions needed by this element.
 import {
-    navigate,
-    updateOffline,
-    updateDrawerState
+  navigate,
+  updateOffline,
+  updateDrawerState
 } from "../actions/app.js";
 
 // These are the elements needed by this element.
@@ -35,19 +35,19 @@ import { menuIcon } from "./my-icons.js";
 import "./snack-bar.js";
 
 class MyApp extends connect(store)(LitElement) {
-    static get properties() {
-        return {
-            appTitle: { type: String },
-            _page: { type: String },
-            _drawerOpened: { type: Boolean },
-            _snackbarOpened: { type: Boolean },
-            _offline: { type: Boolean }
-        };
-    }
+  static get properties() {
+    return {
+      appTitle: { type: String },
+      _page: { type: String },
+      _drawerOpened: { type: Boolean },
+      _snackbarOpened: { type: Boolean },
+      _offline: { type: Boolean }
+    };
+  }
 
-    static get styles() {
-        return [
-            css`
+  static get styles() {
+    return [
+      css`
         :host {
           display: block;
 
@@ -188,12 +188,12 @@ class MyApp extends connect(store)(LitElement) {
           }
         }
       `
-        ];
-    }
+    ];
+  }
 
-    render() {
+  render() {
     // Anything that's related to rendering should be done in here.
-        return html`
+    return html`
       <!-- Header -->
       <app-header condenses reveals effects="waterfall">
         <app-toolbar class="toolbar-top">
@@ -236,47 +236,47 @@ class MyApp extends connect(store)(LitElement) {
         You are now ${this._offline ? "offline" : "online"}.
       </snack-bar>
     `;
-    }
+  }
 
-    constructor() {
-        super();
-        // To force all event listeners for gestures to be passive.
-        // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
-        setPassiveTouchGestures(true);
-    }
+  constructor() {
+    super();
+    // To force all event listeners for gestures to be passive.
+    // See https://www.polymer-project.org/3.0/docs/devguide/settings#setting-passive-touch-gestures
+    setPassiveTouchGestures(true);
+  }
 
-    firstUpdated() {
-        installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
-        installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
-        installMediaQueryWatcher("(min-width: 460px)",
-            () => store.dispatch(updateDrawerState(false)));
-    }
+  firstUpdated() {
+    installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
+    installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
+    installMediaQueryWatcher("(min-width: 460px)",
+      () => store.dispatch(updateDrawerState(false)));
+  }
 
-    updated(changedProps) {
-        if (changedProps.has("_page")) {
-            const pageTitle = this.appTitle + " - " + this._page;
-            updateMetadata({
-                title: pageTitle,
-                description: pageTitle
-                // This object also takes an image property, that points to an img src.
-            });
-        }
+  updated(changedProps) {
+    if (changedProps.has("_page")) {
+      const pageTitle = this.appTitle + " - " + this._page;
+      updateMetadata({
+        title: pageTitle,
+        description: pageTitle
+        // This object also takes an image property, that points to an img src.
+      });
     }
+  }
 
-    _menuButtonClicked() {
-        store.dispatch(updateDrawerState(true));
-    }
+  _menuButtonClicked() {
+    store.dispatch(updateDrawerState(true));
+  }
 
-    _drawerOpenedChanged(e) {
-        store.dispatch(updateDrawerState(e.target.opened));
-    }
+  _drawerOpenedChanged(e) {
+    store.dispatch(updateDrawerState(e.target.opened));
+  }
 
-    stateChanged(state) {
-        this._page = state.app.page;
-        this._offline = state.app.offline;
-        this._snackbarOpened = state.app.snackbarOpened;
-        this._drawerOpened = state.app.drawerOpened;
-    }
+  stateChanged(state) {
+    this._page = state.app.page;
+    this._offline = state.app.offline;
+    this._snackbarOpened = state.app.snackbarOpened;
+    this._drawerOpened = state.app.drawerOpened;
+  }
 }
 
 window.customElements.define("my-app", MyApp);

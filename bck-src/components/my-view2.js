@@ -21,7 +21,7 @@ import { increment, decrement } from "../actions/counter.js";
 // We are lazy loading its reducer.
 import counter from "../reducers/counter.js";
 store.addReducers({
-    counter
+  counter
 });
 
 // These are the elements needed by this element.
@@ -31,22 +31,22 @@ import "./counter-element.js";
 import { SharedStyles } from "./shared-styles.js";
 
 class MyView2 extends connect(store)(PageViewElement) {
-    static get properties() {
-        return {
-            // This is the data from the store.
-            _clicks: { type: Number },
-            _value: { type: Number }
-        };
-    }
+  static get properties() {
+    return {
+      // This is the data from the store.
+      _clicks: { type: Number },
+      _value: { type: Number }
+    };
+  }
 
-    static get styles() {
-        return [
-            SharedStyles
-        ];
-    }
+  static get styles() {
+    return [
+      SharedStyles
+    ];
+  }
 
-    render() {
-        return html`
+  render() {
+    return html`
       <section>
         <h2>Redux example: simple counter</h2>
         <div class="circle">${this._value}</div>
@@ -69,21 +69,21 @@ class MyView2 extends connect(store)(PageViewElement) {
         </p>
       </section>
     `;
-    }
+  }
 
-    _counterIncremented() {
-        store.dispatch(increment());
-    }
+  _counterIncremented() {
+    store.dispatch(increment());
+  }
 
-    _counterDecremented() {
-        store.dispatch(decrement());
-    }
+  _counterDecremented() {
+    store.dispatch(decrement());
+  }
 
-    // This is called every time something is updated in the store.
-    stateChanged(state) {
-        this._clicks = state.counter.clicks;
-        this._value = state.counter.value;
-    }
+  // This is called every time something is updated in the store.
+  stateChanged(state) {
+    this._clicks = state.counter.clicks;
+    this._value = state.counter.value;
+  }
 }
 
 window.customElements.define("my-view2", MyView2);

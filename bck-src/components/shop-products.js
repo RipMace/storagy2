@@ -27,28 +27,28 @@ import { addToCartIcon } from "./my-icons.js";
 import { ButtonSharedStyles } from "./button-shared-styles.js";
 
 class ShopProducts extends connect(store)(LitElement) {
-    static get properties() {
-        return {
-            _products: { type: Object }
-        };
-    }
+  static get properties() {
+    return {
+      _products: { type: Object }
+    };
+  }
 
-    static get styles() {
-        return [
-            ButtonSharedStyles,
-            css`
+  static get styles() {
+    return [
+      ButtonSharedStyles,
+      css`
         :host {
           display: block;
         }
       `
-        ];
-    }
+    ];
+  }
 
-    render() {
-        return html`
+  render() {
+    return html`
       ${Object.keys(this._products).map((key) => {
-        const item = this._products[key];
-        return html`
+    const item = this._products[key];
+    return html`
           <div>
             <shop-item name="${item.title}" amount="${item.inventory}" price="${item.price}"></shop-item>
             <button
@@ -60,22 +60,22 @@ class ShopProducts extends connect(store)(LitElement) {
             </button>
           </div>
         `;
-    })}
+  })}
     `;
-    }
+  }
 
-    firstUpdated() {
-        store.dispatch(getAllProducts());
-    }
+  firstUpdated() {
+    store.dispatch(getAllProducts());
+  }
 
-    _addButtonClicked(e) {
-        store.dispatch(addToCart(e.currentTarget.dataset["index"]));
-    }
+  _addButtonClicked(e) {
+    store.dispatch(addToCart(e.currentTarget.dataset["index"]));
+  }
 
-    // This is called every time something is updated in the store.
-    stateChanged(state) {
-        this._products = state.shop.products;
-    }
+  // This is called every time something is updated in the store.
+  stateChanged(state) {
+    this._products = state.shop.products;
+  }
 }
 
 window.customElements.define("shop-products", ShopProducts);

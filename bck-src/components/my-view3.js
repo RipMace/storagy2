@@ -21,7 +21,7 @@ import { checkout } from "../actions/shop.js";
 // We are lazy loading its reducer.
 import shop, { cartQuantitySelector } from "../reducers/shop.js";
 store.addReducers({
-    shop
+  shop
 });
 
 // These are the elements needed by this element.
@@ -34,19 +34,19 @@ import { ButtonSharedStyles } from "./button-shared-styles.js";
 import { addToCartIcon } from "./my-icons.js";
 
 class MyView3 extends connect(store)(PageViewElement) {
-    static get properties() {
-        return {
-            // This is the data from the store.
-            _quantity: { type: Number },
-            _error: { type: String }
-        };
-    }
+  static get properties() {
+    return {
+      // This is the data from the store.
+      _quantity: { type: Number },
+      _error: { type: String }
+    };
+  }
 
-    static get styles() {
-        return [
-            SharedStyles,
-            ButtonSharedStyles,
-            css`
+  static get styles() {
+    return [
+      SharedStyles,
+      ButtonSharedStyles,
+      css`
         button {
           border: 2px solid var(--app-dark-text-color);
           border-radius: 3px;
@@ -74,11 +74,11 @@ class MyView3 extends connect(store)(PageViewElement) {
           line-height: 30px;
         }
       `
-        ];
-    }
+    ];
+  }
 
-    render() {
-        return html`
+  render() {
+    return html`
       <section>
         <h2>Redux example: shopping cart</h2>
         <div class="cart">${addToCartIcon}<div class="circle small">${this._quantity}</div></div>
@@ -106,17 +106,17 @@ class MyView3 extends connect(store)(PageViewElement) {
         </p>
       </section>
     `;
-    }
+  }
 
-    _checkoutButtonClicked() {
-        store.dispatch(checkout());
-    }
+  _checkoutButtonClicked() {
+    store.dispatch(checkout());
+  }
 
-    // This is called every time something is updated in the store.
-    stateChanged(state) {
-        this._quantity = cartQuantitySelector(state);
-        this._error = state.shop.error;
-    }
+  // This is called every time something is updated in the store.
+  stateChanged(state) {
+    this._quantity = cartQuantitySelector(state);
+    this._error = state.shop.error;
+  }
 }
 
 window.customElements.define("my-view3", MyView3);

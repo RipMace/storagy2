@@ -4,8 +4,7 @@ node_modules/
 test/integration/screenshots-current/
 _site/
 .DS_Store
-.firebase/
+.firebase
 .firebaserc
-database.rules.json
-firebase.json
+firebase-config.js
 .idea/

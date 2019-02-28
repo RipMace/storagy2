@@ -1,6 +1,6 @@
 {
   "name": "Storagy2",
-  "description": "Keep Storagy!",
+  "description": "Keep it Storagy!",
   "displayName": "Storagy 2",
   "main": "src/index.js",
   "version": "0.1",

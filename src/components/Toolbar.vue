@@ -27,6 +27,8 @@
 </script>
 
 <style scoped lang="scss">
+    @import ".././variables.scss";
+
     .toolbar {
         display: flex;
         justify-content: center;
@@ -45,10 +47,10 @@
 
         .mdc-text-field__input {
             border-bottom: none;
-            color: white !important;
+            color: $white !important;
 
             &::placeholder {
-                color: white;
+                color: $white;
             }
         }
     }

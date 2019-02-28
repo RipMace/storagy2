@@ -56,13 +56,13 @@
     @import ".././variables.scss";
 
     .sign-up {
-        background: white;
+        background: $white;
         width: 250px;
         padding: 50px 20px 20px;
         position: relative;
 
         .icon-wrapper {
-            background: white;
+            background: $white;
             border-radius: 50%;
             height: 100px;
             width: 100px;
@@ -72,7 +72,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 5px 10px darkgrey;
+            box-shadow: 0 5px 10px $greyDarker;
 
             .mdc-list-item__graphic {
                 margin-right: 0;
@@ -92,7 +92,7 @@
             text-align: center;
 
             a {
-                color: $mdc-theme-on-secondary;
+                color: $mdc-theme-link-color;
             }
         }
     }

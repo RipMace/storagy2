@@ -24,7 +24,9 @@
   }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+    @import ".././variables.scss";
+
     .categoryList {
         margin-top: 35px;
         padding: 10px;
@@ -34,6 +36,6 @@
     }
     .mdc-list--avatar-list .mdc-list-item__graphic {
         background-color: rgba(0,0,0,.3);
-        color: #fff;
+        color: $white;
     }
 </style>

@@ -9,6 +9,15 @@ firebase.initializeApp(config);
 export const auth = firebase.auth();
 export const provider = new firebase.auth.GoogleAuthProvider();
 
-// firestore
 const db = firebase.firestore();
-export const test = db.collection('test');
+export const stores = db.collection('stores');
+
+export const getAllLocations = () => new Promise((resolve, reject) => {
+  const uid = auth.currentUser.uid;
+  stores.doc(uid).collection('location').get()
+    .then(function(store) {
+      resolve(store);
+    }).catch(function (err) {
+      reject(err);
+    });
+});

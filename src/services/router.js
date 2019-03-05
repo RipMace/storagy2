@@ -1,10 +1,10 @@
-import { auth } from './services/firebase';
+import { auth } from '../services/firebase';
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import Home from './components/Home.vue';
-import Login from './components/Login.vue';
-import SignUp from './components/SignUp.vue';
+import Home from '../components/Home.vue';
+import Login from '../components/Login.vue';
+import SignUp from '../components/SignUp.vue';
 
 Vue.use(Router);
 
@@ -29,12 +29,12 @@ const router = new Router({
       component: SignUp
     },
     {
-      path: '/home',
-      name: 'Home',
+      path: '/storagy',
+      name: 'Storagy',
       component: Home,
       meta: {
         requiresAuth: true
-      }
+      },
     }
   ]
 });
@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
   if (requiresAuth && !currentUser) next('Login');
-  else if (!requiresAuth && currentUser) next('Home');
+  else if (!requiresAuth && currentUser) next('Storagy');
   else next();
 });
 

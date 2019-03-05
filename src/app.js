@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import App from './App.vue';
-import router from './router';
+import router from './services/router';
 import { auth } from './services/firebase';
 
 let app = '';

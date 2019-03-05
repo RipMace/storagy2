@@ -8,7 +8,7 @@
             <form class="full-width-form" @submit="signUp">
                 <TextField v-model="email" placeholder="Email" required type="email" field-id="email"/>
                 <TextField v-model="password" placeholder="Password" required type="password" field-id="password"/>
-                <button type="submit" id="signUp" class="mdc-button mdc-button--raised">
+                <button type="submit" id="signUp" class="mdc-button--raised">
                     <span class="mdc-button__label">sign up</span>
                 </button>
             </form>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import { auth } from '../services/firebase';
+  import { auth, stores } from '../services/firebase';
   import { MDCRipple } from '@material/ripple';
 
   import TextField from "./shared/TextField.vue";
@@ -40,8 +40,9 @@
     methods: {
       signUp: function() {
         auth.createUserWithEmailAndPassword(this.email, this.password).then(
-          (user) => {
-            this.$router.replace('home')
+          (result) => {
+            stores.doc(result.user.uid).set({});
+            this.$router.replace('storagy')
           },
           (err) => {
             alert('Oops. ' + err.message)
@@ -92,7 +93,7 @@
             text-align: center;
 
             a {
-                color: $mdc-theme-link-color;
+                color: $link-color;
             }
         }
     }

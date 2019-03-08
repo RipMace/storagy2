@@ -9,12 +9,13 @@
                         :id="fieldId"
                         class="mdc-switch__native-control"
                         role="switch"
-                        v-model="inputVal"
+                        :checked="value"
+                        @change="$emit('input', $event.target.checked)"
                     >
                 </div>
             </div>
         </div>
-        <label :for="fieldId">{{ placeholder }}</label>
+        <label class="label-placeholder" :for="fieldId">{{placeholder}}</label>
     </div>
 </template>
 
@@ -28,17 +29,9 @@
       fieldId: String,
       placeholder: String,
     },
-    data() {
-      return { inputVal: this.value }
-    },
-    watch: {
-      inputVal(val) {
-        this.$emit('input', val);
-      }
-    },
     mounted() {
       const switchControl = new MDCSwitch(document.querySelector('#' + this.fieldId + 'Field'));
-    }
+    },
   }
 </script>
 
@@ -47,5 +40,9 @@
 
     .toggle-field-wrapper {
         margin-top: 20px;
+    }
+
+    .label-placeholder {
+        margin-left: 10px;
     }
 </style>

@@ -9,9 +9,6 @@
         <p>
             Create a storage location and start to fill it!
         </p>
-        <button class="mdc-button--raised" @click="openCreateLocation">
-            Create location
-        </button>
         <CreateLocation />
     </div>
 </template>
@@ -24,11 +21,6 @@
     components: {
       CreateLocation,
     },
-    methods: {
-      openCreateLocation() {
-        this.$emit('openCreateLocation')
-      }
-    }
   }
 </script>
 

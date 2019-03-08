@@ -37,6 +37,7 @@
 
 <script>
   import { MDCDialog } from '@material/dialog';
+  import { addLocations } from '../../services/firebase';
 
   import TextField from "../shared/TextField.vue";
   import ToggleField from "../shared/ToggleField.vue";
@@ -77,7 +78,7 @@
         document.querySelector('#save-button').click()
       },
       createLocation() {
-        console.log('createLocation')
+        addLocations({ name: this.name, notification: this.notification });
       }
     },
   }

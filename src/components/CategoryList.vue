@@ -1,9 +1,9 @@
 <template>
     <ul class="mdc-list mdc-list--two-line mdc-list--avatar-list">
-        <li class="mdc-list-item" tabindex="0">
+        <li class="mdc-list-item" tabindex="0" v-for="loc in evaluatedLocations">
         <span class="mdc-list-item__graphic material-icons" aria-hidden="true">folder</span>
         <span class="mdc-list-item__text">
-          <span class="mdc-list-item__primary-text">First-line text</span>
+          <span class="mdc-list-item__primary-text">{{loc.name}}</span>
           <span class="mdc-list-item__secondary-text">Second-line text</span>
         </span>
         </li>
@@ -11,11 +11,15 @@
 </template>
 
 <script>
+
   import { MDCList } from '@material/list';
   import { MDCRipple } from '@material/ripple';
 
   export default {
     name: "CategoryList",
+    props: {
+      locations: Array,
+    },
     data() {
       return {
         category: Object,
@@ -24,6 +28,11 @@
     mounted() {
       const list = new MDCList(document.querySelector('.mdc-list'));
       const listItemRipples = list.listElements.map((listItemEl) => new MDCRipple(listItemEl));
+    },
+    computed: {
+      evaluatedLocations () {
+        return this.locations.map((loc) => loc.data())
+      }
     }
   }
 </script>

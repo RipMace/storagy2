@@ -21,3 +21,13 @@ export const getAllLocations = () => new Promise((resolve, reject) => {
       reject(err);
     });
 });
+
+export const addLocations = (newLocation) => new Promise((resolve, reject) => {
+  const uid = auth.currentUser.uid;
+  stores.doc(uid).collection('location').add(newLocation)
+    .then(function(store) {
+      resolve(store);
+    }).catch(function (err) {
+      reject(err);
+    });
+});

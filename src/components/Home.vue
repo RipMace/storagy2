@@ -1,10 +1,13 @@
 <template>
-    <div>
+    <div v-if="!loading">
         <Toolbar v-if="!noLocations" />
-        <main class="content-wrapper">
-            <NoLocations v-if="noLocations"/>
-            <CategoryList v-else/>
+        <main class="content-wrapper" >
+            <NoLocations v-if="noLocations" />
+            <CategoryList :locations="locationList" v-else />
         </main>
+    </div>
+    <div v-else >
+        LOADING
     </div>
 </template>
 
@@ -13,6 +16,7 @@
   import NoLocations from "./NoLocations.vue";
   import CategoryList from "./CategoryList.vue";
   import { getAllLocations } from '../services/firebase';
+
   export default {
     name: "Home",
     components: {
@@ -22,16 +26,22 @@
     },
     data() {
       return {
+        locationList: {
+          type: Array,
+          default: [],
+        },
         noLocations: Boolean,
+        loading: {
+          type: Boolean,
+          default: true,
+        },
       }
     },
-    beforeCreate() {
-      let { noLocations } = this;
+    created() {
       getAllLocations().then((locations) => {
-        console.log(locations)
-        // if (locations.empty) {
-        //   noStores = true;
-        // }
+        this.loading = false;
+        this.noLocations = locations.empty;
+        this.locationList = locations.docs;
       });
     },
   }

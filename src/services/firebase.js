@@ -12,7 +12,7 @@ export const provider = new firebase.auth.GoogleAuthProvider();
 const db = firebase.firestore();
 export const stores = db.collection('stores');
 
-export const getAllLocations = () => new Promise((resolve, reject) => {
+export const getAllLocationsAction = () => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
   stores.doc(uid).collection('location').get()
     .then(function(store) {
@@ -22,7 +22,7 @@ export const getAllLocations = () => new Promise((resolve, reject) => {
     });
 });
 
-export const addLocations = (newLocation) => new Promise((resolve, reject) => {
+export const addLocationsAction = (newLocation) => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
   stores.doc(uid).collection('location').add(newLocation)
     .then(function(store) {

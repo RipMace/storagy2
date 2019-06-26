@@ -6,9 +6,12 @@
 @import "~@material/list/mdc-list";
 @import "~@material/dialog/mdc-dialog";
 @import "~@material/switch/mdc-switch";
+@import "~@material/switch/mdc-switch";
+@import "~@material/drawer/mdc-drawer";
 
 body {
   margin: 0;
+  font-family: $mdc-typography-font-family;
 }
 
 .mdc-dialog-full {

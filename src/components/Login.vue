@@ -4,7 +4,7 @@
             <div class="icon-wrapper">
                 <span class="mdc-list-item__graphic material-icons" aria-hidden="true">fastfood</span>
             </div>
-            <h3 class="title">Sign In to your account</h3>
+            <h6 class="title">Sign In to your account</h6>
             <form class="full-width-form" @submit="login">
                 <TextField v-model="email" placeholder="Email" required type="email" field-id="email"/>
                 <TextField v-model="password" placeholder="Password" required type="password" field-id="password"/>
@@ -109,8 +109,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            text-transform: uppercase;
-            font-size: 12px;
+            font-size: 14px;
             margin: 10px 0 25px;
 
             &::after,

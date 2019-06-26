@@ -9,7 +9,11 @@
         <p>
             Create a storage location and start to fill it!
         </p>
-        <CreateLocation />
+        <CreateLocation>
+            <button class="mdc-button--raised">
+                Create location
+            </button>
+        </CreateLocation>
     </div>
 </template>
 

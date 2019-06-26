@@ -1,5 +1,6 @@
 <template>
     <div v-if="!loading">
+        <Menu />
         <Toolbar v-if="!noLocations" />
         <main class="content-wrapper" >
             <NoLocations v-if="noLocations" />
@@ -13,15 +14,18 @@
 
 <script>
   import Toolbar from "./Toolbar.vue";
+  import Menu from "./Menu.vue";
   import NoLocations from "./NoLocations.vue";
   import CategoryList from "./CategoryList.vue";
-  import { getAllLocations } from '../services/firebase';
+  import { getAllLocationsAction } from '../services/firebase';
+  import EventBus from '../services/event-bus';
 
   export default {
     name: "Home",
     components: {
       CategoryList,
       Toolbar,
+      Menu,
       NoLocations,
     },
     data() {
@@ -37,12 +41,20 @@
         },
       }
     },
+    mounted() {
+      EventBus.$on('reloadCategories', this.getAllLocations);
+    },
+    methods: {
+      getAllLocations() {
+        getAllLocationsAction().then((locations) => {
+          this.loading = false;
+          this.noLocations = locations.empty;
+          this.locationList = locations.docs;
+        });
+      }
+    },
     created() {
-      getAllLocations().then((locations) => {
-        this.loading = false;
-        this.noLocations = locations.empty;
-        this.locationList = locations.docs;
-      });
+      this.getAllLocations()
     },
   }
 </script>

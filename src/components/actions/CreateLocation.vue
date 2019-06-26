@@ -1,8 +1,8 @@
 <template>
     <div>
-        <button class="mdc-button--raised" @click="open">
-            Create location
-        </button>
+        <div @click="open">
+            <slot></slot>
+        </div>
         <div class="mdc-dialog mdc-dialog-full"
              role="dialog"
              aria-modal="true"
@@ -24,6 +24,7 @@
                     <div class="mdc-dialog__content" id="create-storage-content">
                         <form class="full-width-form" @submit="createLocation" v-if="dialog.isOpen">
                             <TextField v-model="name" placeholder="Name" required type="text" field-id="name"/>
+                            <TextField v-model="desc" placeholder="Description" type="text" field-id="desc"/>
                             <ToggleField v-model="notification" placeholder="Enable notification" field-id="notification"/>
                             <button type="submit" id="save-button" style="visibility: hidden">save</button>
                         </form>
@@ -37,7 +38,8 @@
 
 <script>
   import { MDCDialog } from '@material/dialog';
-  import { addLocations } from '../../services/firebase';
+  import { addLocationsAction } from '../../services/firebase';
+  import EventBus from '../../services/event-bus';
 
   import TextField from "../shared/TextField.vue";
   import ToggleField from "../shared/ToggleField.vue";
@@ -59,6 +61,7 @@
       return {
         dialog: MDCDialog,
         name: undefined,
+        desc: undefined,
         notification: true,
       }
     },
@@ -71,14 +74,17 @@
       },
       close() {
         this.name = undefined;
+        this.desc = undefined;
         this.notification = true;
+        EventBus.$emit('reloadCategories');
         this.dialog.close();
       },
       save() {
-        document.querySelector('#save-button').click()
+        document.querySelector('#save-button').click();
       },
       createLocation() {
-        addLocations({ name: this.name, notification: this.notification });
+        addLocationsAction({ name: this.name, description: this.desc, notification: this.notification });
+        this.close();
       }
     },
   }

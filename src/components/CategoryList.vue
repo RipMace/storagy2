@@ -4,7 +4,7 @@
         <span class="mdc-list-item__graphic material-icons" aria-hidden="true">folder</span>
         <span class="mdc-list-item__text">
           <span class="mdc-list-item__primary-text">{{loc.name}}</span>
-          <span class="mdc-list-item__secondary-text">Second-line text</span>
+          <span v-if="loc.description" class="mdc-list-item__secondary-text">{{loc.description}}</span>
         </span>
         </li>
     </ul>

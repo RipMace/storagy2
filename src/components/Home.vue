@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading">
-        <Menu />
+        <Menu :changeViewType="changeViewType" />
         <Toolbar v-if="!noLocations" />
         <main class="content-wrapper" >
             <NoLocations v-if="noLocations" />
@@ -35,6 +35,7 @@
           default: [],
         },
         noLocations: Boolean,
+        viewType: 'location',
         loading: {
           type: Boolean,
           default: true,
@@ -51,6 +52,9 @@
           this.noLocations = locations.empty;
           this.locationList = locations.docs;
         });
+      },
+      changeViewType(newType) {
+       this.viewType = newType;
       }
     },
     created() {

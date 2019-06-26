@@ -14,19 +14,19 @@
                         <div class="mdc-top-app-bar__row">
                             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                                 <button type="button" @click="close" class="material-icons mdc-top-app-bar__navigation-icon--unbounded">arrow_back</button>
-                                <span class="mdc-top-app-bar__title">Create Location</span>
+                                <span class="mdc-top-app-bar__title">Crea Sezione</span>
                             </section>
                             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
-                                <button type="button" @click="save" class="mdc-top-app-bar__action-item--unbounded" aria-label="save">save</button>
+                                <button type="button" @click="save" class="mdc-top-app-bar__action-item--unbounded" aria-label="save">salva</button>
                             </section>
                         </div>
                     </header>
                     <div class="mdc-dialog__content" id="create-storage-content">
                         <form class="full-width-form" @submit="createLocation" v-if="dialog.isOpen">
-                            <TextField v-model="name" placeholder="Name" required type="text" field-id="name"/>
-                            <TextField v-model="desc" placeholder="Description" type="text" field-id="desc"/>
-                            <ToggleField v-model="notification" placeholder="Enable notification" field-id="notification"/>
-                            <button type="submit" id="save-button" style="visibility: hidden">save</button>
+                            <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
+                            <TextField v-model="desc" placeholder="Descrizione" type="text" field-id="desc"/>
+                            <ToggleField v-model="notification" placeholder="Abilita Notifiche" field-id="notification"/>
+                            <button type="submit" id="save-button" style="visibility: hidden">salva</button>
                         </form>
                     </div>
                 </div>

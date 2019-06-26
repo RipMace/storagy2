@@ -4,14 +4,14 @@
             <object type="image/svg+xml" data="images/empty_state.svg" width="300" height="300" />
         </div>
         <h4>
-            Your Storagy seems empty...
+            Il tuo Storagy sembra vuoto...
         </h4>
         <p>
-            Create a storage location and start to fill it!
+            Crea una sezione ed inizia a riempirla!
         </p>
         <CreateLocation>
             <button class="mdc-button--raised">
-                Create location
+                Crea Sezione
             </button>
         </CreateLocation>
     </div>

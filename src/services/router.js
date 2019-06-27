@@ -5,6 +5,8 @@ import Router from 'vue-router';
 import Home from '../components/Home.vue';
 import Login from '../components/Login.vue';
 import SignUp from '../components/SignUp.vue';
+import Category from '../components/Category/Category.vue';
+import Items from '../components/Items/Items.vue';
 
 Vue.use(Router);
 
@@ -35,6 +37,18 @@ const router = new Router({
       meta: {
         requiresAuth: true
       },
+      children: [
+        {
+          path: 'category',
+          name: 'Category',
+          component: Category,
+        },
+        {
+          path: 'items',
+          name: 'Items',
+          component: Items,
+        }
+      ]
     }
   ]
 });

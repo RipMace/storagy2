@@ -42,7 +42,7 @@
         auth.createUserWithEmailAndPassword(this.email, this.password).then(
           (result) => {
             stores.doc(result.user.uid).set({});
-            this.$router.replace('storagy')
+            this.$router.replace('storagy/category')
           },
           (err) => {
             alert('Oops. ' + err.message)

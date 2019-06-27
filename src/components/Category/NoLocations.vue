@@ -19,7 +19,7 @@
 
 
 <script>
-  import CreateLocation from "./actions/CreateLocation.vue";
+  import CreateLocation from "../actions/CreateLocation.vue";
   export default {
     name: "NoLocations",
     components: {
@@ -29,7 +29,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import ".././variables.scss";
+    @import "../../variables.scss";
 
     @keyframes icon-action {
         0% { transform: translateY(0); }

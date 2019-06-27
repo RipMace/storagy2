@@ -38,7 +38,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import ".././variables.scss";
+    @import "../../variables.scss";
 
     .mdc-list-item {
         border-radius: 8px;

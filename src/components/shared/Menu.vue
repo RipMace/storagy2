@@ -10,13 +10,9 @@
             </div>
             <div class="mdc-drawer__content">
                 <nav class="mdc-list">
-                    <a class="mdc-list-item mdc-list-item--activated" @click="changeViewType('location')">
-                        <i class="material-icons mdc-list-item__graphic">all_inbox</i>
-                        <span class="mdc-list-item__text">Lista per Sezione</span>
-                    </a>
-                    <a class="mdc-list-item" @click="changeViewType('complete')">
-                        <i class="material-icons mdc-list-item__graphic">list</i>
-                        <span class="mdc-list-item__text">Lista completa</span>
+                    <a v-for="item in menuList" :class="['mdc-list-item', { 'mdc-list-item--activated' : item.name === $route.name }]" @click="changeRoute(item.path)">
+                        <i class="material-icons mdc-list-item__graphic">{{item.icon}}</i>
+                        <span class="mdc-list-item__text">{{item.label}}</span>
                     </a>
                 </nav>
             </div>
@@ -27,31 +23,46 @@
 
 <script>
   import { MDCDrawer } from "@material/drawer";
-  import { auth } from '../services/firebase';
-  import EventBus from '../services/event-bus';
+  import { auth } from '../../services/firebase';
+  import EventBus from '../../services/event-bus';
 
   export default {
     name: "Menu",
-    props: {
-      changeViewType: Function,
-    },
     data() {
       return {
         user: auth.currentUser,
+        menuList: [
+          {
+            name: 'Category',
+            path: 'category',
+            icon: 'all_inbox',
+            label: 'Lista per Sezione',
+          },
+          {
+            name: 'Items',
+            path: 'items',
+            icon: 'list',
+            label: 'Lista completa',
+          }
+        ],
       }
     },
     mounted() {
       this.drawer = MDCDrawer.attachTo(document.querySelector('.mdc-drawer'));
       this.listEl = document.querySelector('.mdc-drawer .mdc-list');
-      EventBus.$on('openMenu', this.openMenu);
-      this.listEl.addEventListener('click', () => this.drawer.open = false);
+      EventBus.$on('openMenu', this.triggerMenu);
+      this.listEl.addEventListener('click', this.triggerMenu);
+      console.log(this.$router, this.$route)
     },
     beforeDestroy() {
-      this.listEl.removeEventListener('click');
+      this.listEl.removeEventListener('click', this.triggerMenu);
     },
     methods: {
-      openMenu() {
-        this.drawer.open = true;
+      triggerMenu() {
+        this.drawer.open = !this.drawer.open;
+      },
+      changeRoute(path) {
+        this.$router.replace(path);
       },
       logout () {
         auth.signOut().then(() => this.$router.push({name: 'Login'}))
@@ -61,7 +72,7 @@
 </script>
 
 <style scoped lang="scss">
-    @import "../variables";
+    @import "../../variables";
 
     .mdc-drawer {
         top: 0;

@@ -10,7 +10,7 @@
             </div>
             <div class="mdc-drawer__content">
                 <nav class="mdc-list">
-                    <a v-for="item in menuList" :class="['mdc-list-item', { 'mdc-list-item--activated' : item.name === $route.name }]" @click="changeRoute(item.path)">
+                    <a v-for="item in menuList" :class="['mdc-list-item', { 'mdc-list-item--activated' : $route.fullPath.includes(item.name.toLowerCase()) }]" @click="changeRoute(item.name)">
                         <i class="material-icons mdc-list-item__graphic">{{item.icon}}</i>
                         <span class="mdc-list-item__text">{{item.label}}</span>
                     </a>
@@ -34,13 +34,11 @@
         menuList: [
           {
             name: 'Category',
-            path: 'category',
             icon: 'all_inbox',
             label: 'Lista per Sezione',
           },
           {
             name: 'Items',
-            path: 'items',
             icon: 'list',
             label: 'Lista completa',
           }
@@ -52,7 +50,6 @@
       this.listEl = document.querySelector('.mdc-drawer .mdc-list');
       EventBus.$on('openMenu', this.triggerMenu);
       this.listEl.addEventListener('click', this.triggerMenu);
-      console.log(this.$router, this.$route)
     },
     beforeDestroy() {
       this.listEl.removeEventListener('click', this.triggerMenu);
@@ -61,8 +58,8 @@
       triggerMenu() {
         this.drawer.open = !this.drawer.open;
       },
-      changeRoute(path) {
-        this.$router.replace(path);
+      changeRoute(name) {
+        this.$router.push({ name });
       },
       logout () {
         auth.signOut().then(() => this.$router.push({name: 'Login'}))

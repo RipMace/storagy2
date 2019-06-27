@@ -42,6 +42,13 @@ const router = new Router({
           path: 'category',
           name: 'Category',
           component: Category,
+          children: [
+            {
+              path: ':id',
+              name: 'CategoryItems',
+              component: Items,
+            }
+          ]
         },
         {
           path: 'items',

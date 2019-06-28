@@ -1,29 +1,34 @@
 <template>
     <div class="empty-state-wrapper">
         <div class="icon">
-            <object type="image/svg+xml" data="images/empty_state.svg" />
+            <object type="image/svg+xml" data="images/add_to.svg"/>
         </div>
         <h4>
-            Il tuo Storagy sembra vuoto...
+            Il tuo scaffale sembra vuoto...
         </h4>
         <p>
-            Crea una sezione ed inizia a riempirla!
+            Aggiungi un elemento e riempilo!
         </p>
-        <CreateLocation>
+        <CreateItem :locationId="locationId">
             <button class="mdc-button--raised">
-                Crea Sezione
+                Aggiungi
             </button>
-        </CreateLocation>
+        </CreateItem>
     </div>
 </template>
 
 
 <script>
-  import CreateLocation from "../actions/CreateLocation.vue";
+  import CreateItem from "../actions/CreateItem.vue";
   export default {
-    name: "NoLocations",
+    name: "NoItem",
     components: {
-      CreateLocation,
+      CreateItem,
+    },
+    props: {
+      locationId: {
+        type: String,
+      },
     },
   }
 </script>

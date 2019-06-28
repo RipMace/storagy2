@@ -8,9 +8,7 @@
             </div>
         </div>
     </div>
-    <div v-else>
-        <Loading />
-    </div>
+    <Loading v-else/>
 </template>
 
 <script>
@@ -31,15 +29,9 @@
     },
     data() {
       return {
-        locationList: {
-          type: Array,
-          default: [],
-        },
+        locationList: [],
         noLocations: Boolean,
-        loading: {
-          type: Boolean,
-          default: true,
-        },
+        loading: true
       }
     },
     mounted() {

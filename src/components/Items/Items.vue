@@ -1,37 +1,55 @@
 <template>
     <div v-if="!loading">
-        <div>
+        <NoItems v-if="noItems" :locationId="$route.params.id"/>
+        <div v-else>
             <Toolbar />
             <div class="content-wrapper">
-                ITEMS
+                <ItemsList :items="itemsList"
+                />
             </div>
         </div>
     </div>
-    <div v-else>
-        <Loading />
-    </div>
+    <Loading v-else/>
 </template>
 
 <script>
   import Toolbar from "../shared/Toolbar.vue";
   import Loading from "../shared/Loading.vue";
+  import NoItems from "./NoItems.vue";
+  import ItemsList from "./ItemsList.vue";
+
+  import EventBus from '../../services/event-bus';
+  import { getAllLocationItemsAction } from "../../services/firebase";
 
   export default {
     name: "Items",
     components: {
       Loading,
       Toolbar,
+      NoItems,
+      ItemsList,
     },
     data() {
       return {
-        loading: {
-          type: Boolean,
-          default: false,
-        },
+        itemsList: [],
+        loading: true,
+        noItems: true,
       }
     },
+    mounted() {
+      EventBus.$on('reloadItems', this.getAllLocationItems);
+    },
+    methods: {
+      getAllLocationItems(locId) {
+        getAllLocationItemsAction(locId).then((items) => {
+          this.loading = false;
+          this.noItems = items.empty;
+          this.itemsList = items.docs;
+        });
+      },
+    },
     created() {
-      console.log(this.$route)
+      this.getAllLocationItems(this.$route.params.id)
     },
   }
 </script>

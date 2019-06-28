@@ -7,6 +7,7 @@ import Login from '../components/Login.vue';
 import SignUp from '../components/SignUp.vue';
 import Category from '../components/Category/Category.vue';
 import Items from '../components/Items/Items.vue';
+import Item from '../components/shared/Item.vue';
 
 Vue.use(Router);
 
@@ -42,19 +43,27 @@ const router = new Router({
           path: 'category',
           name: 'Category',
           component: Category,
-          children: [
-            {
-              path: ':id',
-              name: 'CategoryItems',
-              component: Items,
-            }
-          ]
+        },
+        {
+          path: 'category/:id',
+          name: 'CategoryItems',
+          component: Items,
+        },
+        {
+          path: 'category/:id/:itemId',
+          name: 'CategoryItemsItem',
+          component: Item,
         },
         {
           path: 'items',
           name: 'Items',
           component: Items,
-        }
+        },
+        {
+          path: 'items/:itemId',
+          name: 'ItemsItem',
+          component: Item,
+        },
       ]
     }
   ]
@@ -64,8 +73,8 @@ router.beforeEach((to, from, next) => {
   const currentUser = auth.currentUser;
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('Login');
-  else if (!requiresAuth && currentUser) next('Storagy');
+  if (requiresAuth && !currentUser) next('login');
+  else if (!requiresAuth && currentUser) next('storagy/category');
   else next();
 });
 

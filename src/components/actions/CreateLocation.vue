@@ -83,8 +83,7 @@
         document.querySelector('#save-button').click();
       },
       createLocation() {
-        addLocationsAction({ name: this.name, description: this.desc, notification: this.notification });
-        this.close();
+        addLocationsAction({ name: this.name, description: this.desc, notification: this.notification }).then(() => this.close());
       }
     },
   }

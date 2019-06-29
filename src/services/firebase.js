@@ -41,6 +41,16 @@ export const getAllLocationItemsAction = (locId) => new Promise((resolve, reject
     });
 });
 
+export const getLocationAction = (locId) => new Promise((resolve, reject) => {
+  const uid = auth.currentUser.uid;
+  stores.doc(uid).collection('location').doc(locId).get()
+    .then(function(store) {
+      resolve(store);
+    }).catch(function (err) {
+      reject(err);
+    });
+});
+
 export const addItemAction = (locId, newItem) => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
   stores.doc(uid).collection('location').doc(locId).collection('items').add(newItem)

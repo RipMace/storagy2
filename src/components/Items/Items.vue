@@ -2,10 +2,9 @@
     <div v-if="!loading">
         <NoItems v-if="noItems" :locationId="$route.params.id"/>
         <div v-else>
-            <Toolbar />
+            <Toolbar :placeholder="location.name" add-action="CreateItem"/>
             <div class="content-wrapper">
-                <ItemsList :items="itemsList"
-                />
+                <ItemsList :showCategory="showCategory" :items="itemsList" />
             </div>
         </div>
     </div>
@@ -19,7 +18,10 @@
   import ItemsList from "./ItemsList.vue";
 
   import EventBus from '../../services/event-bus';
-  import { getAllLocationItemsAction } from "../../services/firebase";
+  import {
+    getLocationAction,
+    getAllLocationItemsAction,
+  } from "../../services/firebase";
 
   export default {
     name: "Items",
@@ -29,9 +31,13 @@
       NoItems,
       ItemsList,
     },
+    props: {
+      showCategory: Boolean,
+    },
     data() {
       return {
         itemsList: [],
+        location: {},
         loading: true,
         noItems: true,
       }
@@ -47,9 +53,15 @@
           this.itemsList = items.docs;
         });
       },
+      getLocation(locId) {
+        getLocationAction(locId).then((loc) => {
+          this.location = loc.data();
+        });
+      },
     },
     created() {
-      this.getAllLocationItems(this.$route.params.id)
+      this.getLocation(this.$route.params.id);
+      this.getAllLocationItems(this.$route.params.id);
     },
   }
 </script>

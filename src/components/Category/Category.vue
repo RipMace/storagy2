@@ -2,7 +2,7 @@
     <div v-if="!loading">
         <NoLocations v-if="noLocations" />
         <div v-else>
-            <Toolbar />
+            <Toolbar placeholder="Storagy" add-action="CreateLocation" />
             <div class="content-wrapper">
                 <CategoryList :locations="locationList" />
             </div>

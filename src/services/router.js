@@ -7,7 +7,6 @@ import Login from '../components/Login.vue';
 import SignUp from '../components/SignUp.vue';
 import Category from '../components/Category/Category.vue';
 import Items from '../components/Items/Items.vue';
-import Item from '../components/shared/Item.vue';
 
 Vue.use(Router);
 
@@ -50,19 +49,9 @@ const router = new Router({
           component: Items,
         },
         {
-          path: 'category/:id/:itemId',
-          name: 'CategoryItemsItem',
-          component: Item,
-        },
-        {
           path: 'items',
           name: 'Items',
           component: Items,
-        },
-        {
-          path: 'items/:itemId',
-          name: 'ItemsItem',
-          component: Item,
         },
       ]
     }

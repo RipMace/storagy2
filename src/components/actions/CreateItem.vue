@@ -82,7 +82,7 @@
         this.desc = undefined;
         this.amount = undefined;
         this.due = undefined;
-        EventBus.$emit('reloadItems');
+        EventBus.$emit('reloadItems', this.locationId);
         this.dialog.close();
       },
       save() {
@@ -95,8 +95,7 @@
           amount: this.amount,
           due: this.due,
         };
-        addItemAction(this.locationId, item);
-        this.close();
+        addItemAction(this.locationId, item).then(() => this.close());
       }
     },
   }

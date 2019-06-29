@@ -51,7 +51,6 @@
         .icon {
             background: whitesmoke;
             border-radius: 50%;
-            padding: 50px;
 
             object {
                 top: -15px;

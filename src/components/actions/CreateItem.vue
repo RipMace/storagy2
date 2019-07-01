@@ -26,7 +26,7 @@
                         <form class="full-width-form" @submit="createItem" v-if="dialog.isOpen">
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
                             <TextAreaField v-model="desc" placeholder="Descrizione" field-id="desc" rows="3" />
-                            <TextField v-model="amount" placeholder="Quantità" required type="number" field-id="amount"/>
+                            <TextField v-model="amount" min="0" placeholder="Quantità" required type="number" field-id="amount"/>
                             <TextField v-model="due" placeholder="Scadenza" required type="date" field-id="due"/>
                             <SelectField v-model="location" :options="locationOptions" placeholder="Sezione" required field-id="location" v-if="editMode"/>
                             <button type="submit" id="save-button" style="visibility: hidden">salva</button>
@@ -88,9 +88,9 @@
       this.dialog = new MDCDialog(document.getElementById(this.id));
       if (this.editMode) {
         getAllLocationsAction().then((locations) => {
-          locations.forEach((location) => {
+          locations.docs.forEach((location) => {
             const loc = location.data();
-            this.locationOptions.push({ id: loc.id, name: loc.name })
+            this.locationOptions.push({ id: location.id, name: loc.name })
           })
         });
       }

@@ -5,6 +5,7 @@
             :required="required"
             :value="value"
             :id="fieldId"
+            :min="min"
             class="mdc-text-field__input"
             @change="$emit('input', $event.target.value)"
         >
@@ -23,9 +24,10 @@
   export default {
     name: "TextField",
     props: {
-      value: String,
+      value: [String, Number],
       fieldId: String,
       placeholder: String,
+      min: String,
       type: {
         type: String,
         default: 'text'

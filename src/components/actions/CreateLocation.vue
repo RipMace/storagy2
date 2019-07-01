@@ -65,7 +65,7 @@
       }
     },
     mounted() {
-      this.dialog = new MDCDialog(document.getElementById(id));
+      this.dialog = new MDCDialog(document.getElementById(this.id));
     },
     methods: {
       open() {

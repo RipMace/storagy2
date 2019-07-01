@@ -29,8 +29,16 @@
                         </CreateItem>
                     </div>
                     <div class="mdc-card__action-icons">
-                        <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon add" title="Add">add</a>
-                        <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon remove" title="Remove">remove</a>
+                        <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon add"
+                           title="Add"
+                           @click="incrementItem(item)">
+                            add
+                        </a>
+                        <a :class="['material-icons mdc-icon-button mdc-card__action mdc-card__action--icon remove', { 'remove-disabled' : item.amount === 0 }]"
+                           title="Remove"
+                           @click="decrementItem(item)">
+                            remove
+                        </a>
                     </div>
                 </div>
             </div>
@@ -41,6 +49,8 @@
 <script>
   import { MDCRipple } from '@material/ripple';
   import CreateItem from '../actions/CreateItem.vue';
+  import EventBus from '../../services/event-bus';
+  import { editItemAction } from '../../services/firebase.js';
 
   export default {
     name: "ItemsList",
@@ -62,9 +72,22 @@
         return iconButtonRipple
       });
     },
+    methods: {
+      incrementItem(item) {
+        this.editItem({ ...item, amount: item.amount + 1 })
+      },
+      decrementItem(item) {
+        this.editItem({ ...item, amount: item.amount - 1 })
+      },
+      editItem(item) {
+        const itemId = item.itemId;
+        delete item.itemId;
+        editItemAction(this.locationId, itemId, item).then(() => EventBus.$emit('reloadItems', this.locationId));
+      }
+    },
     computed: {
-      evaluatedItems () {
-        return this.items.map((item) => ({ id: item.id, ...item.data() }));
+      evaluatedItems() {
+        return this.items.map((item) => ({ itemId: item.id, ...item.data() }));
       }
     }
   }
@@ -114,6 +137,11 @@
             }
             .remove {
                 @include mdc-icon-button-ink-color($dangerColor)
+            }
+            .remove-disabled {
+                @include mdc-icon-button-ink-color($greyDarker);
+                cursor: not-allowed;
+                pointer-events: none;
             }
         }
     }

@@ -47,6 +47,7 @@
     },
     methods: {
       getAllLocationItems(locId) {
+        this.loading = true;
         getAllLocationItemsAction(locId).then((items) => {
           this.loading = false;
           this.noItems = items.empty;

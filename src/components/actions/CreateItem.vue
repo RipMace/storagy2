@@ -4,6 +4,7 @@
             <slot></slot>
         </div>
         <div class="mdc-dialog mdc-dialog-full"
+             :id="id"
              role="dialog"
              aria-modal="true"
              aria-labelledby="create storage"
@@ -22,7 +23,7 @@
                         </div>
                     </header>
                     <div class="mdc-dialog__content" id="create-storage-content">
-                        <form class="full-width-form" @submit="createItem" v-if="dialog.isOpen">
+                        <form class="full-width-form" @submit="createItem">
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
                             <TextAreaField v-model="desc" placeholder="Descrizione" field-id="desc" rows="3" />
                             <TextField v-model="amount" placeholder="Quantità" required type="number" field-id="amount"/>
@@ -38,6 +39,7 @@
 </template>
 
 <script>
+  import uniqid from 'uniqid';
   import { MDCDialog } from '@material/dialog';
   import { addItemAction } from '../../services/firebase';
   import EventBus from '../../services/event-bus';
@@ -52,10 +54,6 @@
       TextAreaField,
     },
     props: {
-      isOpen: {
-        type: Boolean,
-        default: false
-      },
       locationId: {
         type: String,
       },
@@ -68,10 +66,11 @@
         desc: undefined,
         amount: undefined,
         due: undefined,
+        id: uniqid(),
       }
     },
     mounted() {
-      this.dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
+      this.dialog = new MDCDialog(document.getElementById(this.id));
     },
     methods: {
       open() {
@@ -84,6 +83,7 @@
         this.due = undefined;
         EventBus.$emit('reloadItems', this.locationId);
         this.dialog.close();
+        console.log('close', this.dialog)
       },
       save() {
         document.querySelector('#save-button').click();

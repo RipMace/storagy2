@@ -4,6 +4,7 @@
             <slot></slot>
         </div>
         <div class="mdc-dialog mdc-dialog-full"
+             :id="id"
              role="dialog"
              aria-modal="true"
              aria-labelledby="create storage"
@@ -22,7 +23,7 @@
                         </div>
                     </header>
                     <div class="mdc-dialog__content" id="create-storage-content">
-                        <form class="full-width-form" @submit="createLocation" v-if="dialog.isOpen">
+                        <form class="full-width-form" @submit="createLocation">
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
                             <TextField v-model="desc" placeholder="Descrizione" type="text" field-id="desc"/>
                             <ToggleField v-model="notification" placeholder="Abilita Notifiche" field-id="notification"/>
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+  import uniqid from 'uniqid';
   import { MDCDialog } from '@material/dialog';
   import { addLocationsAction } from '../../services/firebase';
   import EventBus from '../../services/event-bus';
@@ -51,10 +53,6 @@
       ToggleField
     },
     props: {
-      isOpen: {
-        type: Boolean,
-        default: false
-      },
       onClose: Function,
     },
     data() {
@@ -63,10 +61,11 @@
         name: undefined,
         desc: undefined,
         notification: true,
+        id: uniqid(),
       }
     },
     mounted() {
-      this.dialog = new MDCDialog(document.querySelector('.mdc-dialog'));
+      this.dialog = new MDCDialog(document.getElementById(id));
     },
     methods: {
       open() {

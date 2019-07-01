@@ -2,7 +2,7 @@
     <div v-if="!loading">
         <NoItems v-if="noItems" :locationId="$route.params.id"/>
         <div v-else>
-            <Toolbar :placeholder="location.name" add-action="CreateItem"/>
+            <Toolbar :placeholder="location.name" :locationId="location.id" add-action="CreateItem"/>
             <div class="content-wrapper">
                 <ItemsList :showCategory="showCategory" :items="itemsList" />
             </div>
@@ -55,7 +55,7 @@
       },
       getLocation(locId) {
         getLocationAction(locId).then((loc) => {
-          this.location = loc.data();
+          this.location = { id: locId, ...loc.data() };
         });
       },
     },

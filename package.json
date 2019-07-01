@@ -19,6 +19,7 @@
     "firebase": "^5.8.4",
     "idb": "^3.0.2",
     "material-components-web": "^0.44.1",
+    "uniqid": "^5.0.3",
     "vue": "^2.6.7",
     "vue-router": "^3.0.2"
   },

@@ -22,9 +22,11 @@
                 </div>
                 <div class="mdc-card__actions">
                     <div class="mdc-card__action-buttons">
-                        <button class="mdc-button mdc-card__action mdc-card__action--button" @click="changeRoute(item.id)">
-                            <span class="mdc-button__label">Modifica</span>
-                        </button>
+                        <CreateItem>
+                            <button class="mdc-button mdc-card__action mdc-card__action--button">
+                                <span class="mdc-button__label">Modifica</span>
+                            </button>
+                        </CreateItem>
                     </div>
                     <div class="mdc-card__action-icons">
                         <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon add" title="Add">add</a>
@@ -38,12 +40,16 @@
 
 <script>
   import { MDCRipple } from '@material/ripple';
+  import CreateItem from '../actions/CreateItem.vue';
 
   export default {
     name: "ItemsList",
     props: {
       items: Array,
       showCategory: Boolean,
+    },
+    components: {
+      CreateItem
     },
     mounted() {
       const ripples = [].map.call(document.querySelectorAll('.mdc-button'), function(el) {
@@ -54,11 +60,6 @@
         iconButtonRipple.unbounded = true;
         return iconButtonRipple
       });
-    },
-    methods: {
-      changeRoute(itemId) {
-        this.$router.push({ name: 'CategoryItemsItem', params: { itemId } });
-      },
     },
     computed: {
       evaluatedItems () {

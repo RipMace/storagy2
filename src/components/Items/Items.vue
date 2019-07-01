@@ -4,7 +4,7 @@
         <div v-else>
             <Toolbar :placeholder="location.name" :locationId="location.id" add-action="CreateItem"/>
             <div class="content-wrapper">
-                <ItemsList :showCategory="showCategory" :items="itemsList" />
+                <ItemsList :showCategory="showCategory" :locationId="location.id" :items="itemsList" />
             </div>
         </div>
     </div>

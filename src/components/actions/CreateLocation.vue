@@ -23,7 +23,7 @@
                         </div>
                     </header>
                     <div class="mdc-dialog__content" id="create-storage-content">
-                        <form class="full-width-form" @submit="createLocation">
+                        <form class="full-width-form" @submit="createLocation" v-if="dialog.isOpen">
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
                             <TextField v-model="desc" placeholder="Descrizione" type="text" field-id="desc"/>
                             <ToggleField v-model="notification" placeholder="Abilita Notifiche" field-id="notification"/>

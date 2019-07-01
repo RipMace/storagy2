@@ -22,7 +22,7 @@
                 </div>
                 <div class="mdc-card__actions">
                     <div class="mdc-card__action-buttons">
-                        <CreateItem>
+                        <CreateItem :location-id="locationId" edit-mode :edit-data="item">
                             <button class="mdc-button mdc-card__action mdc-card__action--button">
                                 <span class="mdc-button__label">Modifica</span>
                             </button>
@@ -47,6 +47,7 @@
     props: {
       items: Array,
       showCategory: Boolean,
+      locationId: String,
     },
     components: {
       CreateItem

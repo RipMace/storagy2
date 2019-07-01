@@ -15,7 +15,7 @@
                         <div class="mdc-top-app-bar__row">
                             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                                 <button type="button" @click="close" class="material-icons mdc-top-app-bar__navigation-icon--unbounded">arrow_back</button>
-                                <span class="mdc-top-app-bar__title">Aggiungi</span>
+                                <span class="mdc-top-app-bar__title">{{ editMode ? 'Modifica' : 'Aggiungi'}}</span>
                             </section>
                             <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end">
                                 <button type="button" @click="save" class="mdc-top-app-bar__action-item--unbounded" aria-label="save">salva</button>
@@ -23,11 +23,12 @@
                         </div>
                     </header>
                     <div class="mdc-dialog__content" id="create-storage-content">
-                        <form class="full-width-form" @submit="createItem">
+                        <form class="full-width-form" @submit="createItem" v-if="dialog.isOpen">
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
                             <TextAreaField v-model="desc" placeholder="Descrizione" field-id="desc" rows="3" />
                             <TextField v-model="amount" placeholder="Quantità" required type="number" field-id="amount"/>
                             <TextField v-model="due" placeholder="Scadenza" required type="date" field-id="due"/>
+                            <SelectField v-model="location" :options="locationOptions" placeholder="Sezione" required field-id="location" v-if="editMode"/>
                             <button type="submit" id="save-button" style="visibility: hidden">salva</button>
                         </form>
                     </div>
@@ -43,8 +44,10 @@
   import { MDCDialog } from '@material/dialog';
   import { addItemAction } from '../../services/firebase';
   import EventBus from '../../services/event-bus';
+  import { getAllLocationsAction } from '../../services/firebase';
 
   import TextField from "../shared/TextField.vue";
+  import SelectField from "../shared/SelectField.vue";
   import TextAreaField from "../shared/TextAreaField.vue";
 
   export default {
@@ -52,38 +55,53 @@
     components: {
       TextField,
       TextAreaField,
+      SelectField,
     },
     props: {
       locationId: {
         type: String,
       },
       onClose: Function,
+      editMode: Boolean,
+      editData: Object,
     },
     data() {
-      return {
-        dialog: MDCDialog,
+      let form = {
         name: undefined,
         desc: undefined,
         amount: undefined,
-        due: undefined,
+        due:  undefined,
+      };
+
+      if (this.editMode) {
+        form = { ...form, ...this.editData }
+      }
+
+      return {
+        dialog: MDCDialog,
         id: uniqid(),
+        locationOptions: [],
+        ...form,
       }
     },
     mounted() {
       this.dialog = new MDCDialog(document.getElementById(this.id));
+      if (this.editMode) {
+        getAllLocationsAction().then((locations) => {
+          locations.forEach((location) => {
+            const loc = location.data();
+            this.locationOptions.push({ id: loc.id, name: loc.name })
+          })
+        });
+      }
     },
     methods: {
       open() {
         this.dialog.open();
       },
       close() {
-        this.name = undefined;
-        this.desc = undefined;
-        this.amount = undefined;
-        this.due = undefined;
         EventBus.$emit('reloadItems', this.locationId);
         this.dialog.close();
-        console.log('close', this.dialog)
       },
       save() {
         document.querySelector('#save-button').click();

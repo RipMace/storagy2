@@ -5,9 +5,8 @@
             :required="required"
             :id="fieldId"
             class="mdc-select__native-control"
-            :selected="value"
             @change="$emit('input', $event.target.value)">
-            <option v-for="opt in options" :value="opt.id" :label="opt.name">
+            <option v-for="opt in options" :value="opt.id" :label="opt.name" :selected="value === opt.id">
                {{opt.id}}
             </option>
         </select>

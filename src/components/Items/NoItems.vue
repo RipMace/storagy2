@@ -9,7 +9,7 @@
         <p>
             Aggiungi un elemento e riempilo!
         </p>
-        <CreateItem :locationId="locationId">
+        <CreateItem :fromLocation="location">
             <button class="mdc-button--raised">
                 Aggiungi
             </button>
@@ -26,9 +26,7 @@
       CreateItem,
     },
     props: {
-      locationId: {
-        type: String,
-      },
+      location: Object,
     },
   }
 </script>

@@ -1,10 +1,10 @@
 <template>
     <div v-if="!loading">
-        <NoItems v-if="noItems" :locationId="$route.params.id"/>
+        <NoItems v-if="noItems" :location="location"/>
         <div v-else>
             <Toolbar :placeholder="location.name" :locationId="location.id" add-action="CreateItem"/>
             <div class="content-wrapper">
-                <ItemsList :showCategory="showCategory" :locationId="location.id" :items="itemsList" />
+                <ItemsList :showCategory="showCategory" :location="location" :items="itemsList" />
             </div>
         </div>
     </div>

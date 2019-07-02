@@ -25,7 +25,7 @@
                     <div class="mdc-dialog__content" id="create-storage-content">
                         <form class="full-width-form" @submit="createItem" v-if="dialog.isOpen">
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
-                            <TextAreaField v-model="desc" placeholder="Descrizione" field-id="desc" rows="3" />
+                            <TextAreaField v-model="description" placeholder="Descrizione" field-id="description" rows="3" />
                             <TextField v-model="amount" min="0" placeholder="Quantità" required type="number" field-id="amount"/>
                             <TextField v-model="due" placeholder="Scadenza" required type="date" field-id="due"/>
                             <SelectField v-model="location" :options="locationOptions" placeholder="Sezione" required field-id="location" v-if="editMode"/>
@@ -42,7 +42,7 @@
 <script>
   import uniqid from 'uniqid';
   import { MDCDialog } from '@material/dialog';
-  import { addItemAction } from '../../services/firebase';
+  import { addItemAction, editItemAction, moveItemAction } from '../../services/firebase';
   import EventBus from '../../services/event-bus';
   import { getAllLocationsAction } from '../../services/firebase';
 
@@ -58,8 +58,9 @@
       SelectField,
     },
     props: {
-      locationId: {
-        type: String,
+      fromLocation: {
+        type: Object,
+        default: () => ({})
       },
       onClose: Function,
       editMode: Boolean,
@@ -68,9 +69,10 @@
     data() {
       let form = {
         name: undefined,
-        desc: undefined,
+        description: undefined,
         amount: undefined,
         due:  undefined,
+        location: this.fromLocation.id,
       };
 
       if (this.editMode) {
@@ -100,7 +102,7 @@
         this.dialog.open();
       },
       close() {
-        EventBus.$emit('reloadItems', this.locationId);
+        EventBus.$emit('reloadItems', this.fromLocation.id);
         this.dialog.close();
       },
       save() {
@@ -109,11 +111,22 @@
       createItem() {
         const item = {
           name: this.name,
-          description: this.desc,
+          description: this.description,
           amount: this.amount,
           due: this.due,
+          location: this.location,
         };
-        addItemAction(this.locationId, item).then(() => this.close());
+        if (this.editMode) {
+          editItemAction(this.fromLocation.id, this.editData.itemId, item).then(() => {
+            if (this.location !== this.fromLocation.id) {
+              moveItemAction(this.fromLocation.id, this.location, this.editData.itemId, item).then(() => this.close() )
+            } else {
+              this.close()
+            }
+          });
+        } else {
+          addItemAction(this.fromLocation.id, item).then(() => this.close());
+        }
       }
     },
   }

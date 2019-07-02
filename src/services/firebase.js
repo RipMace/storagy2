@@ -33,7 +33,8 @@ export const addLocationsAction = (newLocation) => new Promise((resolve, reject)
 
 export const getAllLocationItemsAction = (locId) => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
-  stores.doc(uid).collection('location').doc(locId).collection('items').get()
+  stores.doc(uid).collection('location').doc(locId)
+    .collection('items').get()
     .then(function(store) {
       resolve(store);
     }).catch(function (err) {
@@ -53,7 +54,8 @@ export const getLocationAction = (locId) => new Promise((resolve, reject) => {
 
 export const addItemAction = (locId, newItem) => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
-  stores.doc(uid).collection('location').doc(locId).collection('items').add(newItem)
+  stores.doc(uid).collection('location').doc(locId)
+    .collection('items').add(newItem)
     .then(function(store) {
       resolve(store);
     }).catch(function (err) {
@@ -74,9 +76,28 @@ export const editItemAction = (locId, itemId, editItem) => new Promise((resolve,
 
 export const getItemAction = (locId, itemId) => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
-  stores.doc(uid).collection('location').doc(locId).collection('items').doc(itemId).get()
+  stores.doc(uid).collection('location').doc(locId)
+    .collection('items').doc(itemId).get()
     .then(function(store) {
       resolve(store);
+    }).catch(function (err) {
+      reject(err);
+    });
+});
+
+export const moveItemAction = (oldLocId, newLocId, itemId, item) => new Promise((resolve, reject) => {
+  const uid = auth.currentUser.uid;
+  stores.doc(uid).collection('location').doc(oldLocId)
+    .collection('items').doc(itemId).delete()
+    .then(function() {
+      return stores.doc(uid).collection('location').doc(newLocId)
+        .collection('items').add(item).then(
+          function (store) {
+            resolve(store);
+          }
+        ).catch(function (err) {
+          reject(err);
+        });
     }).catch(function (err) {
       reject(err);
     });

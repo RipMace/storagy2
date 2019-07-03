@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const firebase = require('firebase');
+const firebase = require('firebase-admin');
 
 // firebase deploy --only functions
 
@@ -9,12 +9,15 @@ exports.updateDocCount = functions.firestore
 
     const userId = context.params.userId;
     const locationId = context.params.locationId;
+    let loc = {};
 
     const docRef = firebase.firestore()
       .collection('stores').doc(userId)
       .collection('location').doc(locationId);
 
-    const loc = docRef.get();
+    docRef.get().then(location => {
+      loc = location.data();
+    });
 
     return docRef.collection('items').get().then(store => {
       let count = 0;
@@ -27,8 +30,7 @@ exports.updateDocCount = functions.firestore
         }
       });
 
-      const data = { ...loc.data(), count };
-      return docRef.update(data);
+      return docRef.update({...loc, count});
     });
 
   });

@@ -10,10 +10,13 @@
             Aggiungi un elemento e riempilo!
         </p>
         <CreateItem :fromLocation="location">
-            <button class="mdc-button--raised">
+            <button class="mdc-button--raised" style="margin-top: 20px">
                 Aggiungi
             </button>
         </CreateItem>
+        <button class="mdc-button" style="margin-top: 20px" @click="goBack">
+            Torna indietro
+        </button>
     </div>
 </template>
 
@@ -28,6 +31,11 @@
     props: {
       location: Object,
     },
+    methods: {
+      goBack() {
+        this.$router.push({ name: 'Category' });
+      }
+    }
   }
 </script>
 

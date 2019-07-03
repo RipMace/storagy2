@@ -54,7 +54,7 @@
 
 <style scoped lang="scss">
     .content-wrapper {
-        margin-top: 40px;
+        margin-top: 50px;
         padding: 10px;
     }
 </style>

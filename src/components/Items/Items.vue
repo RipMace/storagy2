@@ -3,9 +3,7 @@
         <NoItems v-if="noItems" :location="location"/>
         <div v-else>
             <Toolbar :placeholder="location.name" :locationId="location.id" add-action="CreateItem"/>
-            <div class="content-wrapper">
-                <ItemsList :showCategory="showCategory" :location="location" :items="itemsList" />
-            </div>
+            <ItemsList :showCategory="showCategory" :location="location" :items="itemsList" />
         </div>
     </div>
     <Loading v-else/>
@@ -68,8 +66,4 @@
 </script>
 
 <style scoped lang="scss">
-    .content-wrapper {
-        margin-top: 40px;
-        padding: 10px;
-    }
 </style>

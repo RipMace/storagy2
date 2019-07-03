@@ -1,23 +1,21 @@
 <template>
     <aside>
         <Menu />
-        <div class="toolbar">
-            <header class="mdc-top-app-bar mdc-top-app-bar--dense">
-                <div class="mdc-top-app-bar__row">
-                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                        <button @click="openMenu" class="material-icons mdc-top-app-bar__navigation-icon">menu</button>
-                        <div class="mdc-text-field mdc-text-field--no-label">
-                            <input type="text" class="mdc-text-field__input" :placeholder="'Cerca in ' + placeholder" aria-label="Label">
-                        </div>
-                    </section>
-                    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                        <component :is="addAction" :location-id="locationId">
-                            <a class="material-icons mdc-top-app-bar__action-item" aria-label="Add Item" alt="Add Item">playlist_add</a>
-                        </component>
-                    </section>
-                </div>
-            </header>
-        </div>
+        <header class="mdc-top-app-bar mdc-top-app-bar--dense toolbar">
+            <div class="mdc-top-app-bar__row">
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+                    <button @click="openMenu" class="material-icons mdc-top-app-bar__navigation-icon">menu</button>
+                    <div class="mdc-text-field mdc-text-field--no-label">
+                        <input type="text" class="mdc-text-field__input" :placeholder="'Cerca in ' + placeholder" aria-label="Label">
+                    </div>
+                </section>
+                <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    <component :is="addAction" :location-id="locationId">
+                        <a class="material-icons mdc-top-app-bar__action-item" aria-label="Add Item" alt="Add Item">playlist_add</a>
+                    </component>
+                </section>
+            </div>
+        </header>
     </aside>
 </template>
 
@@ -57,7 +55,8 @@
     .toolbar {
         display: flex;
         justify-content: center;
-        padding: 10px 10px 0;
+        margin: 10px 10px 0;
+        top: 0;
     }
     .mdc-top-app-bar {
         width: calc( 100% - 20px);

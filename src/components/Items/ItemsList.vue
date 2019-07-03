@@ -1,53 +1,56 @@
 <template>
-    <ul class="mdc-image-list my-image-list my-masonry-image-list">
-        <li class="mdc-image-list__item" tabindex="0" v-for="item in evaluatedItems">
-            <div class="mdc-card item-card">
-                <div class="mdc-card__primary-action">
-                    <div class="mdc-card__primary-action item-card__primary-action mdc-ripple-upgraded">
-                        <div class="item-card__primary">
-                            <h2 class="item-card__title mdc-typography mdc-typography--headline6">
-                                {{item.name}}
-                                <span class="amount">
+    <div id="swipeWrapper" class="swipe-wrapper">
+        <ul class="mdc-image-list-grid">
+            <li class="mdc-image-list__item" tabindex="0" v-for="item in evaluatedItems">
+                <div class="mdc-card item-card">
+                    <div class="mdc-card__primary-action">
+                        <div class="mdc-card__primary-action item-card__primary-action mdc-ripple-upgraded">
+                            <div class="item-card__primary">
+                                <h2 class="item-card__title mdc-typography mdc-typography--headline6">
+                                    {{item.name}}
+                                    <span class="amount">
                                     {{item.amount}}
                                 </span>
-                            </h2>
-                            <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
-                                {{item.due}}{{showCategory ? ` - ${item.location}` : ''}}
-                            </h3>
+                                </h2>
+                                <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
+                                    {{item.due}}{{showCategory ? ` - ${item.location}` : ''}}
+                                </h3>
+                            </div>
+                            <div class="item-card__secondary mdc-typography mdc-typography--body2">
+                                {{item.description}}
+                            </div>
                         </div>
-                        <div class="item-card__secondary mdc-typography mdc-typography--body2">
-                            {{item.description}}
+                    </div>
+                    <div class="mdc-card__actions">
+                        <div class="mdc-card__action-buttons">
+                            <CreateItem :fromLocation="location" edit-mode :edit-data="item">
+                                <button class="mdc-button mdc-card__action mdc-card__action--button">
+                                    <span class="mdc-button__label">Modifica</span>
+                                </button>
+                            </CreateItem>
+                        </div>
+                        <div class="mdc-card__action-icons">
+                            <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon add"
+                               title="Add"
+                               @click="incrementItem(item)">
+                                add
+                            </a>
+                            <a :class="['material-icons mdc-icon-button mdc-card__action mdc-card__action--icon remove', { 'remove-disabled' : item.amount === 0 }]"
+                               title="Remove"
+                               @click="decrementItem(item)">
+                                remove
+                            </a>
                         </div>
                     </div>
                 </div>
-                <div class="mdc-card__actions">
-                    <div class="mdc-card__action-buttons">
-                        <CreateItem :fromLocation="location" edit-mode :edit-data="item">
-                            <button class="mdc-button mdc-card__action mdc-card__action--button">
-                                <span class="mdc-button__label">Modifica</span>
-                            </button>
-                        </CreateItem>
-                    </div>
-                    <div class="mdc-card__action-icons">
-                        <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon add"
-                           title="Add"
-                           @click="incrementItem(item)">
-                            add
-                        </a>
-                        <a :class="['material-icons mdc-icon-button mdc-card__action mdc-card__action--icon remove', { 'remove-disabled' : item.amount === 0 }]"
-                           title="Remove"
-                           @click="decrementItem(item)">
-                            remove
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
+            </li>
+        </ul>
+    </div>
 </template>
 
 <script>
   import { MDCRipple } from '@material/ripple';
+  import Hammer from 'hammerjs';
   import CreateItem from '../actions/CreateItem.vue';
   import EventBus from '../../services/event-bus';
   import { editItemAction } from '../../services/firebase.js';
@@ -71,6 +74,9 @@
         iconButtonRipple.unbounded = true;
         return iconButtonRipple
       });
+      const swipeWrapper = document.getElementById('swipeWrapper');
+      const hammertime = Hammer(swipeWrapper).on('swipe', () => this.$router.push({ name: 'Category' }));
+      hammertime.get('swipe').set({ direction: Hammer.DIRECTION_RIGHT });
     },
     methods: {
       incrementItem(item) {
@@ -89,6 +95,13 @@
       evaluatedItems() {
         return this.items.map((item) => ({ itemId: item.id, ...item.data() }));
       }
+      // evaluatedItems() {
+      //   const a = this.items.map((item) => ({ itemId: item.id, ...item.data() }));
+      //   for(var i = 0; i< 100;++i){
+      //     a.push(a[0]);
+      //   }
+      //   return a
+      // }
     }
   }
 </script>
@@ -98,14 +111,19 @@
     @import "~@material/icon-button/mdc-icon-button";
     @import "../../variables.scss";
 
-    .my-masonry-image-list {
-        @include mdc-image-list-masonry-columns(5);
+    .swipe-wrapper {
+        height: 95vh;
+        width: 100%;
+    }
+
+    .mdc-image-list-grid {
+        padding: 60px 10px 0;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+        grid-gap: 16px;
     }
 
     .item-card {
-        margin: 15px;
-        width: 350px;
-
         .item-card__primary {
             padding: 1rem;
 

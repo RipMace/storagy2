@@ -102,8 +102,11 @@
         this.dialog.open();
       },
       close() {
-        EventBus.$emit('reloadItems', this.fromLocation.id);
         this.dialog.close();
+      },
+      closeAndReload() {
+        EventBus.$emit('reloadItems', this.fromLocation.id);
+        this.close();
       },
       save() {
         document.querySelector('#save-button').click();
@@ -119,13 +122,13 @@
         if (this.editMode) {
           editItemAction(this.fromLocation.id, this.editData.itemId, item).then(() => {
             if (this.location !== this.fromLocation.id) {
-              moveItemAction(this.fromLocation.id, this.location, this.editData.itemId, item).then(() => this.close() )
+              moveItemAction(this.fromLocation.id, this.location, this.editData.itemId, item).then(() => this.closeAndReload() )
             } else {
-              this.close()
+              this.closeAndReload()
             }
           });
         } else {
-          addItemAction(this.fromLocation.id, item).then(() => this.close());
+          addItemAction(this.fromLocation.id, item).then(() => this.closeAndReload());
         }
       }
     },

@@ -16,7 +16,7 @@
                     </div>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                    <component :is="addAction" :location-id="locationId">
+                    <component :is="addAction" :fromLocation="{id: locationId}">
                         <a class="material-icons mdc-top-app-bar__action-item" aria-label="Add Item" alt="Add Item">playlist_add</a>
                     </component>
                 </section>

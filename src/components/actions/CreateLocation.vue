@@ -72,17 +72,20 @@
         this.dialog.open();
       },
       close() {
+        this.dialog.close();
+      },
+      closeAndReload() {
         this.name = undefined;
         this.desc = undefined;
         this.notification = true;
         EventBus.$emit('reloadCategories');
-        this.dialog.close();
+        this.close()
       },
       save() {
         document.querySelector('#save-button').click();
       },
       createLocation() {
-        addLocationsAction({ name: this.name, description: this.desc, notification: this.notification }).then(() => this.close());
+        addLocationsAction({ name: this.name, description: this.desc, notification: this.notification }).then(() => this.closeAndReload());
       }
     },
   }

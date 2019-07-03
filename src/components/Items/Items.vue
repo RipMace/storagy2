@@ -2,8 +2,8 @@
     <div v-if="!loading">
         <NoItems v-if="noItems" :location="location"/>
         <div v-else>
-            <Toolbar :placeholder="location.name" :locationId="location.id" add-action="CreateItem"/>
-            <ItemsList :showCategory="showCategory" :location="location" :items="itemsList" />
+            <Toolbar :placeholder="location.name" :locationId="location.id" add-action="CreateItem" :changeTextFilter="changeTextFilter"/>
+            <ItemsList :showCategory="showCategory" :location="location" :items="itemsList" :textFilter="textFilter" />
         </div>
     </div>
     <Loading v-else/>
@@ -36,6 +36,7 @@
       return {
         itemsList: [],
         location: {},
+        textFilter: '',
         loading: true,
         noItems: true,
       }
@@ -56,6 +57,9 @@
         getLocationAction(locId).then((loc) => {
           this.location = { id: locId, ...loc.data() };
         });
+      },
+      changeTextFilter(event) {
+        this.textFilter = event.target.value;
       },
     },
     created() {

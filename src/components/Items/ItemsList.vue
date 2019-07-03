@@ -61,6 +61,7 @@
       items: Array,
       showCategory: Boolean,
       location: Object,
+      textFilter: String,
     },
     components: {
       CreateItem
@@ -93,7 +94,9 @@
     },
     computed: {
       evaluatedItems() {
-        return this.items.map((item) => ({ itemId: item.id, ...item.data() }));
+        return this.items
+          .map((item) => ({ itemId: item.id, ...item.data() }))
+          .filter((item) => item.name.includes(this.textFilter));
       }
       // evaluatedItems() {
       //   const a = this.items.map((item) => ({ itemId: item.id, ...item.data() }));

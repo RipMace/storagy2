@@ -6,7 +6,13 @@
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                     <button @click="openMenu" class="material-icons mdc-top-app-bar__navigation-icon">menu</button>
                     <div class="mdc-text-field mdc-text-field--no-label">
-                        <input type="text" class="mdc-text-field__input" :placeholder="'Cerca in ' + placeholder" aria-label="Label">
+                        <input
+                            type="text"
+                            class="mdc-text-field__input"
+                            :placeholder="'Cerca in ' + placeholder"
+                            @keyup="changeTextFilter"
+                            aria-label="Label"
+                        >
                     </div>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
@@ -37,6 +43,7 @@
       addAction: String,
       locationId: String,
       placeholder: String,
+      changeTextFilter: Function,
     },
     mounted() {
       const topAppBar = new MDCTopAppBar(document.querySelector('.mdc-top-app-bar'));

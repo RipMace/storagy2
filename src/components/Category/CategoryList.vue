@@ -20,6 +20,7 @@
     name: "CategoryList",
     props: {
       locations: Array,
+      textFilter: String,
     },
     mounted() {
       const list = new MDCList(document.querySelector('.mdc-list'));
@@ -32,7 +33,9 @@
     },
     computed: {
       evaluatedLocations () {
-        return this.locations.map((loc) => ({ id: loc.id, ...loc.data() }));
+        return this.locations
+          .map((loc) => ({ id: loc.id, ...loc.data() }))
+          .filter((loc) => loc.name.includes(this.textFilter));
       }
     }
   }

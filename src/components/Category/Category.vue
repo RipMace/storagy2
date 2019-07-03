@@ -2,9 +2,9 @@
     <div v-if="!loading">
         <NoLocations v-if="noLocations" />
         <div v-else>
-            <Toolbar placeholder="Storagy" add-action="CreateLocation" />
+            <Toolbar placeholder="Storagy" :changeTextFilter="changeTextFilter" add-action="CreateLocation" />
             <div class="content-wrapper">
-                <CategoryList :locations="locationList" />
+                <CategoryList :textFilter="textFilter" :locations="locationList" />
             </div>
         </div>
     </div>
@@ -31,6 +31,7 @@
       return {
         locationList: [],
         noLocations: Boolean,
+        textFilter: '',
         loading: true
       }
     },
@@ -44,6 +45,9 @@
           this.noLocations = locations.empty;
           this.locationList = locations.docs;
         });
+      },
+      changeTextFilter(event) {
+        this.textFilter = event.target.value;
       },
     },
     created() {

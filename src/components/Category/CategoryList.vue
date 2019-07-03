@@ -6,7 +6,7 @@
               <span class="mdc-list-item__primary-text">{{loc.name}}</span>
               <span v-if="loc.description" class="mdc-list-item__secondary-text">{{loc.description}}</span>
             </span>
-            <span class="mdc-list-item__meta">5</span>
+            <span class="mdc-list-item__meta">{{loc.count || 0}}</span>
         </li>
     </ul>
 </template>

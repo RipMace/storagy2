@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
-const firebase = require('firebase-admin');
-
+const admin = require('firebase-admin');
+admin.initializeApp();
 // firebase deploy --only functions
 
 exports.updateDocCount = functions.firestore
@@ -11,7 +11,7 @@ exports.updateDocCount = functions.firestore
     const locationId = context.params.locationId;
     let loc = {};
 
-    const docRef = firebase.firestore()
+    const docRef = admin.firestore()
       .collection('stores').doc(userId)
       .collection('location').doc(locationId);
 

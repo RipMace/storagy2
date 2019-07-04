@@ -52,7 +52,7 @@
         itemsList: [],
         location: {},
         textFilter: '',
-        sort: { key: 'name', type: 'ASC' },
+        sort: { key: 'name', type: 'String' },
         loading: true,
         noItems: true,
       }

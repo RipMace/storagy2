@@ -51,9 +51,9 @@
   import EventBus from '../../services/event-bus';
 
   const orderOptions = [
-    {id: 'NAME', key: 'name', type: 'ASC', label: 'Ordina per nome'},
-    {id: 'DUE', key: 'due', type: 'ASC', label: 'Ordina per data scadenza'},
-    {id: 'AMOUNT', key: 'amount', type: 'DESC', label: 'Ordina per quantità'},
+    {id: 'NAME', key: 'name', type: 'String', label: 'Ordina per nome'},
+    {id: 'DUE', key: 'due', type: 'Date', label: 'Ordina per data scadenza'},
+    {id: 'AMOUNT', key: 'amount', type: 'Number', label: 'Ordina per quantità'},
   ];
 
   export default {

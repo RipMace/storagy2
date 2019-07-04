@@ -3,22 +3,20 @@
         <ul class="mdc-image-list-grid">
             <li class="mdc-image-list__item" tabindex="0" v-for="item in evaluatedItems">
                 <div class="mdc-card item-card">
-                    <div class="mdc-card__primary-action">
-                        <div class="mdc-card__primary-action item-card__primary-action mdc-ripple-upgraded">
-                            <div class="item-card__primary">
-                                <h2 class="item-card__title mdc-typography mdc-typography--headline6">
-                                    {{item.name}}
-                                    <span class="amount">
-                                    {{item.amount}}
-                                </span>
-                                </h2>
-                                <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
-                                    Scadenza: {{moment(item.due).format('DD/MM/YYYY')}}{{showCategory ? ` - ${item.location}` : ''}}
-                                </h3>
-                            </div>
-                            <div class="item-card__secondary mdc-typography mdc-typography--body2">
-                                {{item.description}}
-                            </div>
+                    <div :class="['mdc-card__primary-action', 'mdc-ripple-upgraded', { 'on-due-date': checkDueDate(item.due) }]">
+                        <div class="item-card__primary">
+                            <h2 class="item-card__title mdc-typography mdc-typography--headline6">
+                                {{item.name}}
+                                <span class="amount">
+                                {{item.amount}}
+                            </span>
+                            </h2>
+                            <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
+                                Scadenza: {{moment(item.due).format('DD/MM/YYYY')}}{{showCategory ? ` - ${item.location}` : ''}}
+                            </h3>
+                        </div>
+                        <div class="item-card__secondary mdc-typography mdc-typography--body2">
+                            {{item.description}}
                         </div>
                     </div>
                     <div class="mdc-card__actions">
@@ -95,6 +93,9 @@
         const itemId = item.itemId;
         delete item.itemId;
         editItemAction(this.location.id, itemId, item).then(() => EventBus.$emit('reloadItems', this.location.id));
+      },
+      checkDueDate(date) {
+        return moment(date).diff(moment(), 'd') < 8
       }
     },
     computed: {
@@ -104,20 +105,28 @@
           .map((item) => ({ itemId: item.id, ...item.data() }))
           .filter((item) => item.name.includes(this.textFilter));
         if (Object.keys(sorting).length) {
-          if (sorting.type === 'ASC') {
-            return items.sort((a, b) => a[sorting.key] - b[sorting.key])
+          if (sorting.type === 'String') {
+            return items.sort((a, b) => {
+              const nameA = a[sorting.key].toUpperCase();
+              const nameB = b[sorting.key].toUpperCase();
+              if (nameA < nameB) {
+                return -1;
+              }
+              if (nameA > nameB) {
+                return 1;
+              }
+              return 0;
+            })
           }
-          return items.sort((a, b) => a[sorting.key] - b[sorting.key]).reverse()
+          if (sorting.type === 'Date') {
+            return items.sort((a, b) => new Date(b[sorting.key]) - new Date(a[sorting.key])).reverse()
+          }
+          if (sorting.type === 'Number') {
+            return items.sort((a, b) => b[sorting.key] - a[sorting.key])
+          }
         }
         return items
-      }
-      // evaluatedItems() {
-      //   const a = this.items.map((item) => ({ itemId: item.id, ...item.data() }));
-      //   for(var i = 0; i< 100;++i){
-      //     a.push(a[0]);
-      //   }
-      //   return a
-      // }
+      },
     }
   }
 </script>
@@ -137,6 +146,10 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
         grid-gap: 16px;
+    }
+
+    .on-due-date {
+        background: $mdc-theme-background;
     }
 
     .item-card {

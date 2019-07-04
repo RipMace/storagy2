@@ -2,8 +2,23 @@
     <div v-if="!loading">
         <NoItems v-if="noItems" :location="location"/>
         <div v-else>
-            <Toolbar :placeholder="location.name" :locationId="location.id" add-action="CreateItem" :changeTextFilter="changeTextFilter"/>
-            <ItemsList :showCategory="showCategory" :location="location" :items="itemsList" :textFilter="textFilter" />
+            <Toolbar
+                :placeholder="location.name"
+                :locationId="location.id"
+                addAction="CreateItem"
+                :changeTextFilter="changeTextFilter"
+                :changeSort="changeSort"
+                goBackRoute="Category"
+                :orderBy="['NAME', 'DUE', 'AMOUNT']"
+                :currentSort="sort"
+            />
+            <ItemsList
+                :showCategory="showCategory"
+                :location="location"
+                :items="itemsList"
+                :textFilter="textFilter"
+                :sort="sort"
+            />
         </div>
     </div>
     <Loading v-else/>
@@ -37,6 +52,7 @@
         itemsList: [],
         location: {},
         textFilter: '',
+        sort: { key: 'name', type: 'ASC' },
         loading: true,
         noItems: true,
       }
@@ -60,6 +76,9 @@
       },
       changeTextFilter(event) {
         this.textFilter = event.target.value;
+      },
+      changeSort(sort) {
+        this.sort = sort;
       },
     },
     created() {

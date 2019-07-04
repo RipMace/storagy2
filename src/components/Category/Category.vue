@@ -2,7 +2,11 @@
     <div v-if="!loading">
         <NoLocations v-if="noLocations" />
         <div v-else>
-            <Toolbar placeholder="Storagy" :changeTextFilter="changeTextFilter" add-action="CreateLocation" />
+            <Toolbar
+                placeholder="Storagy"
+                :changeTextFilter="changeTextFilter"
+                addAction="CreateLocation"
+            />
             <div class="content-wrapper">
                 <CategoryList :textFilter="textFilter" :locations="locationList" />
             </div>

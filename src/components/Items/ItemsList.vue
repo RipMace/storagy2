@@ -13,7 +13,7 @@
                                 </span>
                                 </h2>
                                 <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
-                                    {{item.due}}{{showCategory ? ` - ${item.location}` : ''}}
+                                    Scadenza: {{moment(item.due).format('DD/MM/YYYY')}}{{showCategory ? ` - ${item.location}` : ''}}
                                 </h3>
                             </div>
                             <div class="item-card__secondary mdc-typography mdc-typography--body2">
@@ -51,6 +51,7 @@
 <script>
   import { MDCRipple } from '@material/ripple';
   import Hammer from 'hammerjs';
+  import moment from 'moment';
   import CreateItem from '../actions/CreateItem.vue';
   import EventBus from '../../services/event-bus';
   import { editItemAction } from '../../services/firebase.js';
@@ -62,6 +63,7 @@
       showCategory: Boolean,
       location: Object,
       textFilter: String,
+      sort: Object,
     },
     components: {
       CreateItem
@@ -80,6 +82,9 @@
       hammertime.get('swipe').set({ direction: Hammer.DIRECTION_RIGHT });
     },
     methods: {
+      moment(date) {
+        return moment(date);
+      },
       incrementItem(item) {
         this.editItem({ ...item, amount: item.amount + 1 })
       },
@@ -94,9 +99,17 @@
     },
     computed: {
       evaluatedItems() {
-        return this.items
+       const sorting = { ...this.sort };
+        const items = this.items
           .map((item) => ({ itemId: item.id, ...item.data() }))
           .filter((item) => item.name.includes(this.textFilter));
+        if (Object.keys(sorting).length) {
+          if (sorting.type === 'ASC') {
+            return items.sort((a, b) => a[sorting.key] - b[sorting.key])
+          }
+          return items.sort((a, b) => a[sorting.key] - b[sorting.key]).reverse()
+        }
+        return items
       }
       // evaluatedItems() {
       //   const a = this.items.map((item) => ({ itemId: item.id, ...item.data() }));

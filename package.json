@@ -19,6 +19,7 @@
     "hammerjs": "^2.0.8",
     "idb": "^4.0.3",
     "material-components-web": "^0.44.1",
+    "moment": "^2.24.0",
     "uniqid": "^5.0.3",
     "vue": "^2.6.10",
     "vue-router": "^3.0.7"

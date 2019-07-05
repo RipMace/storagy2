@@ -2,6 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { config } from '../../firebase-config';
+import { checkDueDate } from '../components/utils/checkDue.js';
 
 firebase.initializeApp(config);
 
@@ -103,4 +104,23 @@ export const moveItemAction = (oldLocId, newLocId, itemId, item) => new Promise(
     });
 });
 
-
+export const getAllItemsAction = (onlyDue) => new Promise((resolve, reject) => {
+  let itemsPromises = [];
+  getAllLocationsAction().then((locations) => {
+    itemsPromises = locations.docs.map((loc) => {
+      return getAllLocationItemsAction(loc.id).then((items) => {
+        return items.docs.map((item) => item.data());
+      }).catch(function (err) {
+        reject(err);
+      });
+    });
+    Promise.all(itemsPromises).then(results => {
+      if (onlyDue) {
+        resolve(results.flat().filter((item) => checkDueDate(item.due)));
+      }
+      resolve(results.flat());
+    });
+  }).catch(function (err) {
+    reject(err);
+  });
+});

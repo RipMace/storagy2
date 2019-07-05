@@ -7,6 +7,7 @@ import Login from '../components/Login.vue';
 import SignUp from '../components/SignUp.vue';
 import Category from '../components/Category/Category.vue';
 import Items from '../components/Items/Items.vue';
+import AllItems from '../components/Items/AllItems.vue';
 
 Vue.use(Router);
 
@@ -51,7 +52,7 @@ const router = new Router({
         {
           path: 'items',
           name: 'Items',
-          component: Items,
+          component: AllItems,
         },
       ]
     }

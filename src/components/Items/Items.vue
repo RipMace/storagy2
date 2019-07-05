@@ -13,7 +13,6 @@
                 :currentSort="sort"
             />
             <ItemsList
-                :showCategory="showCategory"
                 :location="location"
                 :items="itemsList"
                 :textFilter="textFilter"
@@ -43,9 +42,6 @@
       Toolbar,
       NoItems,
       ItemsList,
-    },
-    props: {
-      showCategory: Boolean,
     },
     data() {
       return {

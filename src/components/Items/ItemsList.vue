@@ -53,6 +53,8 @@
   import CreateItem from '../actions/CreateItem.vue';
   import EventBus from '../../services/event-bus';
   import { editItemAction } from '../../services/firebase.js';
+  import { checkDueDate } from '../utils/checkDue.js';
+  import { stringSort, dateSort, numberSort } from '../utils/sorter.js';
 
   export default {
     name: "ItemsList",
@@ -95,7 +97,7 @@
         editItemAction(this.location.id, itemId, item).then(() => EventBus.$emit('reloadItems', this.location.id));
       },
       checkDueDate(date) {
-        return moment(date).diff(moment(), 'd') < 8
+        return checkDueDate(date)
       }
     },
     computed: {
@@ -106,23 +108,13 @@
           .filter((item) => item.name.includes(this.textFilter));
         if (Object.keys(sorting).length) {
           if (sorting.type === 'String') {
-            return items.sort((a, b) => {
-              const nameA = a[sorting.key].toUpperCase();
-              const nameB = b[sorting.key].toUpperCase();
-              if (nameA < nameB) {
-                return -1;
-              }
-              if (nameA > nameB) {
-                return 1;
-              }
-              return 0;
-            })
+            return stringSort(items, sorting.key)
           }
           if (sorting.type === 'Date') {
-            return items.sort((a, b) => new Date(b[sorting.key]) - new Date(a[sorting.key])).reverse()
+            return dateSort(items, sorting.key);
           }
           if (sorting.type === 'Number') {
-            return items.sort((a, b) => b[sorting.key] - a[sorting.key])
+            return numberSort(items, sorting.key);
           }
         }
         return items

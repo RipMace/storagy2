@@ -41,6 +41,11 @@
             name: 'Items',
             icon: 'list',
             label: 'Lista completa',
+          },
+          {
+            name: 'Calendar',
+            icon: 'today',
+            label: 'Calendario',
           }
         ],
       }

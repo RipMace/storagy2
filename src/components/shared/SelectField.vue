@@ -41,3 +41,11 @@
     }
   }
 </script>
+
+<style scoped lang="scss">
+    @import "../../variables";
+
+    .mdc-select {
+        width: 100%;
+    }
+</style>

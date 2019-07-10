@@ -17,7 +17,7 @@
                     </div>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
-                    <component :is="addAction" :fromLocation="{id: locationId}">
+                    <component :is="addAction" :disableLocation="disableLocation" :fromLocation="{id: locationId}">
                         <a class="material-icons mdc-top-app-bar__action-item">playlist_add</a>
                     </component>
                     <div v-if="orderBy">
@@ -72,6 +72,7 @@
       goBackRoute: String,
       orderBy: Array,
       currentSort: Object,
+      disableLocation: Boolean,
     },
     mounted() {
       const topAppBar = new MDCTopAppBar(document.querySelector('.mdc-top-app-bar'));

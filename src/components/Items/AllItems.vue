@@ -1,25 +1,23 @@
 <template>
     <div v-if="!loading">
-<!--        <NoItems v-if="noItems" :location="location"/>-->
-<!--        <div v-else>-->
-<!--            <Toolbar-->
-<!--                :placeholder="location.name"-->
-<!--                :locationId="location.id"-->
-<!--                addAction="CreateItem"-->
-<!--                :changeTextFilter="changeTextFilter"-->
-<!--                :changeSort="changeSort"-->
-<!--                goBackRoute="Category"-->
-<!--                :orderBy="['NAME', 'DUE', 'AMOUNT']"-->
-<!--                :currentSort="sort"-->
-<!--            />-->
-<!--            <ItemsList-->
-<!--                showCategory-->
-<!--                :location="location"-->
-<!--                :items="itemsList"-->
-<!--                :textFilter="textFilter"-->
-<!--                :sort="sort"-->
-<!--            />-->
-<!--        </div>-->
+        <NoItems v-if="noItems"/>
+        <div v-else>
+            <Toolbar
+                placeholder="Storagy"
+                addAction="CreateItem"
+                editMode
+                :changeTextFilter="changeTextFilter"
+                :changeSort="changeSort"
+                :orderBy="['NAME', 'DUE', 'AMOUNT']"
+                :currentSort="sort"
+            />
+            <ItemsList
+                showCategory
+                :items="itemsList"
+                :textFilter="textFilter"
+                :sort="sort"
+            />
+        </div>
     </div>
     <Loading v-else/>
 </template>
@@ -46,7 +44,6 @@
     data() {
       return {
         itemsList: [],
-        location: {},
         textFilter: '',
         sort: { key: 'name', type: 'String' },
         loading: true,
@@ -60,7 +57,9 @@
       getAllItems() {
         this.loading = true;
         getAllItemsAction().then((itemsList) => {
-          console.log(itemsList)
+          this.noItems = !itemsList.length;
+          this.itemsList = itemsList;
+          this.loading = false;
         })
       },
       changeTextFilter(event) {

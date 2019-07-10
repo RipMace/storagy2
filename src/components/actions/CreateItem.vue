@@ -28,7 +28,7 @@
                             <TextAreaField v-model="description" placeholder="Descrizione" field-id="description" rows="3" />
                             <TextField v-model="amount" min="0" placeholder="Quantità" required type="number" field-id="amount"/>
                             <TextField v-model="due" placeholder="Scadenza" required type="date" field-id="due"/>
-                            <SelectField v-model="location" :options="locationOptions" placeholder="Sezione" required field-id="location" v-if="editMode"/>
+                            <SelectField v-model="location" :options="locationOptions" placeholder="Sezione" required :disabled="disableLocation" field-id="location"/>
                             <button type="submit" id="save-button" style="visibility: hidden">salva</button>
                         </form>
                     </div>
@@ -64,6 +64,7 @@
       },
       onClose: Function,
       editMode: Boolean,
+      disableLocation: Boolean,
       editData: Object,
     },
     data() {
@@ -82,20 +83,18 @@
       return {
         dialog: MDCDialog,
         id: uniqid(),
-        locationOptions: [],
+        locationOptions: [{}],
         ...form,
       }
     },
     mounted() {
       this.dialog = new MDCDialog(document.getElementById(this.id));
-      if (this.editMode) {
-        getAllLocationsAction().then((locations) => {
-          locations.docs.forEach((location) => {
-            const loc = location.data();
-            this.locationOptions.push({ id: location.id, name: loc.name })
-          })
-        });
-      }
+      getAllLocationsAction().then((locations) => {
+        locations.docs.forEach((location) => {
+          const loc = location.data();
+          this.locationOptions.push({ id: location.id, name: loc.name })
+        })
+      });
     },
     methods: {
       open() {
@@ -128,7 +127,7 @@
             }
           });
         } else {
-          addItemAction(this.fromLocation.id, item).then(() => this.closeAndReload());
+          addItemAction(this.location || this.fromLocation.id, item).then(() => this.closeAndReload());
         }
       }
     },
@@ -145,5 +144,6 @@
 
     .mdc-dialog__content {
         margin-top: 60px;
+        text-align: left;
     }
 </style>

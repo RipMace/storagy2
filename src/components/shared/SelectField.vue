@@ -4,6 +4,7 @@
         <select
             :required="required"
             :id="fieldId"
+            :disabled="disabled"
             class="mdc-select__native-control"
             @change="$emit('input', $event.target.value)">
             <option v-for="opt in options" :value="opt.id" :label="opt.name" :selected="value === opt.id">
@@ -29,6 +30,7 @@
       value: String,
       fieldId: String,
       placeholder: String,
+      disabled: Boolean,
       required: {
         type: Boolean,
         default: false

@@ -108,8 +108,9 @@ export const getAllItemsAction = (onlyDue) => new Promise((resolve, reject) => {
   let itemsPromises = [];
   getAllLocationsAction().then((locations) => {
     itemsPromises = locations.docs.map((loc) => {
+      const locData = loc.data();
       return getAllLocationItemsAction(loc.id).then((items) => {
-        return items.docs.map((item) => item.data());
+        return items.docs.map((item) => ({ locationName: locData.name, itemId: item.id, ...item.data() }))
       }).catch(function (err) {
         reject(err);
       });

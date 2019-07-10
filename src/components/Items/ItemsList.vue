@@ -12,7 +12,9 @@
                             </span>
                             </h2>
                             <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
-                                Scadenza: {{moment(item.due).format('DD/MM/YYYY')}}{{showCategory ? ` - ${item.location}` : ''}}
+                                Scadenza: {{moment(item.due).format('DD/MM/YYYY')}}
+                                <br>
+                                Sezione: {{showCategory ? item.locationName : ''}}
                             </h3>
                         </div>
                         <div class="item-card__secondary mdc-typography mdc-typography--body2">
@@ -93,8 +95,10 @@
       },
       editItem(item) {
         const itemId = item.itemId;
+        const locationId = item.location || this.location.id;
         delete item.itemId;
-        editItemAction(this.location.id, itemId, item).then(() => EventBus.$emit('reloadItems', this.location.id));
+        delete item.locationName;
+        editItemAction(locationId, itemId, item).then(() => EventBus.$emit('reloadItems', locationId));
       },
       checkDueDate(date) {
         return checkDueDate(date)
@@ -104,7 +108,6 @@
       evaluatedItems() {
        const sorting = { ...this.sort };
         const items = this.items
-          .map((item) => ({ itemId: item.id, ...item.data() }))
           .filter((item) => item.name.includes(this.textFilter));
         if (Object.keys(sorting).length) {
           if (sorting.type === 'String') {

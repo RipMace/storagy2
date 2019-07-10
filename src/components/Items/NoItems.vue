@@ -9,7 +9,7 @@
         <p>
             Aggiungi un elemento e riempilo!
         </p>
-        <CreateItem :fromLocation="location">
+        <CreateItem :fromLocation="location" disableLocation>
             <button class="mdc-button--raised" style="margin-top: 20px">
                 Aggiungi
             </button>

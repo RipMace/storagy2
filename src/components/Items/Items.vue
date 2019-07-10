@@ -6,6 +6,7 @@
                 :placeholder="location.name"
                 :locationId="location.id"
                 addAction="CreateItem"
+                disableLocation
                 :changeTextFilter="changeTextFilter"
                 :changeSort="changeSort"
                 goBackRoute="Category"
@@ -62,7 +63,7 @@
         getAllLocationItemsAction(locId).then((items) => {
           this.loading = false;
           this.noItems = items.empty;
-          this.itemsList = items.docs;
+          this.itemsList = items.docs.map((item) => ({ itemId: item.id, ...item.data() }));
         });
       },
       getLocation(locId) {

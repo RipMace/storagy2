@@ -14,7 +14,7 @@
                             <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
                                 Scadenza: {{moment(item.due).format('DD/MM/YYYY')}}
                                 <br>
-                                Sezione: {{showCategory ? item.locationName : ''}}
+                                {{showCategory ? `Sezione: ${item.locationName}` : ''}}
                             </h3>
                         </div>
                         <div class="item-card__secondary mdc-typography mdc-typography--body2">

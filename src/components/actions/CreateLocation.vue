@@ -41,6 +41,7 @@
   import { MDCDialog } from '@material/dialog';
   import { addLocationsAction } from '../../services/firebase';
   import EventBus from '../../services/event-bus';
+  import { cleanObj } from '../utils/cleanObj';
 
   import TextField from "../shared/TextField.vue";
   import ToggleField from "../shared/ToggleField.vue";
@@ -82,7 +83,7 @@
         document.querySelector('#save-button').click();
       },
       createLocation() {
-        addLocationsAction({ name: this.name, description: this.desc }).then(() => this.closeAndReload());
+        addLocationsAction(cleanObj({ name: this.name, description: this.desc })).then(() => this.closeAndReload());
       }
     },
   }

@@ -45,6 +45,7 @@
   import { addItemAction, editItemAction, moveItemAction } from '../../services/firebase';
   import EventBus from '../../services/event-bus';
   import { getAllLocationsAction } from '../../services/firebase';
+  import { cleanObj } from '../utils/cleanObj';
 
   import TextField from "../shared/TextField.vue";
   import SelectField from "../shared/SelectField.vue";
@@ -111,13 +112,13 @@
         document.querySelector('#save-button').click();
       },
       createItem() {
-        const item = {
+        const item = cleanObj({
           name: this.name,
           description: this.description,
           amount: this.amount,
           due: this.due,
           location: this.location,
-        };
+        });
         if (this.editMode) {
           editItemAction(this.fromLocation.id, this.editData.itemId, item).then(() => {
             if (this.location !== this.fromLocation.id) {

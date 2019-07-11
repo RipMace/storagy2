@@ -26,7 +26,6 @@
                         <form class="full-width-form" @submit="createLocation" v-if="dialog.isOpen">
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
                             <TextField v-model="desc" placeholder="Descrizione" type="text" field-id="desc"/>
-                            <ToggleField v-model="notification" placeholder="Abilita Notifiche" field-id="notification"/>
                             <button type="submit" id="save-button" style="visibility: hidden">salva</button>
                         </form>
                     </div>
@@ -60,7 +59,6 @@
         dialog: MDCDialog,
         name: undefined,
         desc: undefined,
-        notification: true,
         id: uniqid(),
       }
     },
@@ -77,7 +75,6 @@
       closeAndReload() {
         this.name = undefined;
         this.desc = undefined;
-        this.notification = true;
         EventBus.$emit('reloadCategories');
         this.close()
       },
@@ -85,7 +82,7 @@
         document.querySelector('#save-button').click();
       },
       createLocation() {
-        addLocationsAction({ name: this.name, description: this.desc, notification: this.notification }).then(() => this.closeAndReload());
+        addLocationsAction({ name: this.name, description: this.desc }).then(() => this.closeAndReload());
       }
     },
   }

@@ -2,7 +2,9 @@
     <div class="login-background">
         <div class="login">
             <div class="icon-wrapper">
-                <span class="mdc-list-item__graphic material-icons" aria-hidden="true">fastfood</span>
+                <span class="mdc-list-item__graphic" aria-hidden="true">
+                    <img class="header-image" width="80px" height="80px" src="images/logo_trasp.png">
+                </span>
             </div>
             <h6 class="title">Sign In to your account</h6>
             <form class="full-width-form" @submit="login">
@@ -95,8 +97,8 @@
             .mdc-list-item__graphic {
                 margin-right: 0;
                 font-size: 60px;
-                width: 60px;
-                height: 60px;
+                width: 80px;
+                height: 80px;
             }
         }
 

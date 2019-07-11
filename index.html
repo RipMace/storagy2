@@ -13,7 +13,7 @@
     <link rel="manifest" href="manifest.json">
 
     <!-- See https://goo.gl/qRE0vM -->
-    <meta name="theme-color" content="#3f51b5">
+    <meta name="theme-color" content="#009688">
 
     <!-- Material Icons and Lato Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -58,9 +58,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('service-worker.js', {
-            scope: '/',
-          }).then(registration => {
+          navigator.serviceWorker.register('/service-worker.js').then(registration => {
             console.log('SW registered: ', registration);
           }).catch(registrationError => {
             console.log('SW registration failed: ', registrationError);

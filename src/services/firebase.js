@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
 import { config } from '../../firebase-config';
-import { checkDueDate } from '../components/utils/checkDue.js';
+import { checkDueDate } from '../components/utils/checkDue';
 
 firebase.initializeApp(config);
 

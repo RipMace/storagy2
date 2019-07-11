@@ -54,9 +54,9 @@
   import moment from 'moment';
   import CreateItem from '../actions/CreateItem.vue';
   import EventBus from '../../services/event-bus';
-  import { editItemAction } from '../../services/firebase.js';
-  import { checkDueDate } from '../utils/checkDue.js';
-  import { stringSort, dateSort, numberSort } from '../utils/sorter.js';
+  import { editItemAction } from '../../services/firebase';
+  import { checkDueDate } from '../utils/checkDue';
+  import { stringSort, dateSort, numberSort } from '../utils/sorter';
 
   export default {
     name: "ItemsList",

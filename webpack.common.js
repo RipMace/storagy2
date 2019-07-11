@@ -35,7 +35,6 @@ module.exports = {
       chunkFilename: '[id].[hash].css',
     }),
     new CopyPlugin([
-      { from: 'service-worker.js' },
       { from: 'manifest.json' },
       { from: 'images', to: 'images' },
     ]),

@@ -28,7 +28,7 @@
   import { getAllItemsAction } from './../services/firebase';
   import VueCal from 'vue-cal';
   import 'vue-cal/dist/vuecal.css';
-  import { checkDueDate } from './utils/checkDue.js';
+  import { checkDueDate } from './utils/checkDue';
   import ToolbarBase from "./shared/ToolbarBase.vue";
   import Loading from "./shared/Loading.vue";
 
@@ -100,15 +100,19 @@
 
     .vuecal {
         margin-top: 10px;
+        border-radius: 4px;
     }
 
     .vuecal__menu li {
         font-size: 16px;
         padding: 7px 20px;
+        width: 50%;
+        text-align: center;
+        border-bottom-color: $link-color;
     }
 
     .vuecal__title {
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .vuecal__event-title {

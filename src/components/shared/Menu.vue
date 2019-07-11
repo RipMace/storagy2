@@ -43,6 +43,11 @@
             label: 'Lista completa',
           },
           {
+            name: 'ExpiredItems',
+            icon: 'list_alt',
+            label: 'Lista in Scadenza',
+          },
+          {
             name: 'Calendar',
             icon: 'today',
             label: 'Calendario',

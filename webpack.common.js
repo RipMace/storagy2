@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const autoprefixer = require('autoprefixer');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -39,6 +40,7 @@ module.exports = {
       { from: 'images', to: 'images' },
     ]),
     new VueLoaderPlugin(),
+    new WorkboxPlugin.GenerateSW()
   ],
   module: {
     rules: [

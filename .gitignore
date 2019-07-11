@@ -1,4 +1,5 @@
 build/
+dist/
 server/build/
 node_modules/
 test/integration/screenshots-current/

@@ -16,6 +16,12 @@ module.exports = {
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].js',
   },
+  optimization: {
+    splitChunks: {
+      minSize: 10000,
+      maxSize: 200000,
+    }
+  },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({

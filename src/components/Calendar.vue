@@ -57,7 +57,13 @@
               end: item.due,
               title: item.name,
               allDay: true,
-              content: `<div><div>Quantità: ${item.amount}</div><div>Sezione: ${item.locationName}</div></div>`,
+              content: `<div class="mdc-card item-event-card">
+                            <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
+                                Quantità:  ${item.amount}
+                                <br>
+                                Sezione: ${item.locationName}
+                            </h3>
+                        </div>`,
               class: checkDueDate(item.due) ? 'due' : 'standard'
             }));
           this.loading = false;
@@ -81,13 +87,19 @@
     .due {
         background-color: $mdc-theme-background;
         border: 1px solid goldenrod;
+        border-radius: 4px;
         color: $black;
     }
 
     .standard {
         background-color: $greyLighter;
         border: 1px solid $greyDarker;
+        border-radius: 4px;
         color: $black;
+    }
+
+    .vuecal {
+        margin-top: 10px;
     }
 
     .vuecal__menu li {
@@ -99,11 +111,21 @@
         font-size: 16px;
     }
 
+    .vuecal__event-title {
+        padding: 10px;
+        font-size: 16px;
+    }
+
     .vuecal__cell-date {
         position: absolute;
         top: 0;
         right: 0;
         padding: 5px;
         font-size: 12px;
+    }
+
+    .vuecal--green-theme .vuecal__menu {
+        background-color: $mdc-theme-primary;
+        margin: 0;
     }
 </style>

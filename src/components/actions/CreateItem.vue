@@ -115,7 +115,7 @@
         const item = cleanObj({
           name: this.name,
           description: this.description,
-          amount: this.amount,
+          amount: parseInt(this.amount),
           due: this.due,
           location: this.location,
         });

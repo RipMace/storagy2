@@ -93,10 +93,10 @@
         return moment(date);
       },
       incrementItem(item) {
-        this.editItem({ ...item, amount: item.amount + 1 })
+        this.editItem({ ...item, amount: Number(item.amount) + 1 })
       },
       decrementItem(item) {
-        this.editItem({ ...item, amount: item.amount - 1 })
+        this.editItem({ ...item, amount: Number(item.amount) - 1 })
       },
       deleteItem(item) {
         const itemId = item.itemId;

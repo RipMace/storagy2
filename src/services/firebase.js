@@ -32,6 +32,16 @@ export const addLocationsAction = (newLocation) => new Promise((resolve, reject)
     });
 });
 
+export const deleteLocationAction = (locId) => new Promise((resolve, reject) => {
+  const uid = auth.currentUser.uid;
+  stores.doc(uid).collection('location').doc(locId).delete()
+    .then(function(store) {
+      resolve(store);
+    }).catch(function (err) {
+      reject(err);
+    });
+});
+
 export const getAllLocationItemsAction = (locId) => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
   stores.doc(uid).collection('location').doc(locId)
@@ -68,6 +78,17 @@ export const editItemAction = (locId, itemId, editItem) => new Promise((resolve,
   const uid = auth.currentUser.uid;
   stores.doc(uid).collection('location').doc(locId)
     .collection('items').doc(itemId).update(editItem)
+    .then(function(store) {
+      resolve(store);
+    }).catch(function (err) {
+      reject(err);
+    });
+});
+
+export const deleteItemAction = (locId, itemId) => new Promise((resolve, reject) => {
+  const uid = auth.currentUser.uid;
+  stores.doc(uid).collection('location').doc(locId)
+    .collection('items').doc(itemId).delete()
     .then(function(store) {
       resolve(store);
     }).catch(function (err) {

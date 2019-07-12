@@ -28,6 +28,11 @@
                                     <span class="mdc-button__label">Modifica</span>
                                 </button>
                             </CreateItem>
+                            <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon"
+                               title="Delete"
+                               @click="deleteItem(item)">
+                                delete
+                            </a>
                         </div>
                         <div class="mdc-card__action-icons">
                             <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon add"
@@ -54,7 +59,7 @@
   import moment from 'moment';
   import CreateItem from '../actions/CreateItem.vue';
   import EventBus from '../../services/event-bus';
-  import { editItemAction } from '../../services/firebase';
+  import { editItemAction, deleteItemAction } from '../../services/firebase';
   import { checkDueDate } from '../utils/checkDue';
   import { stringSort, dateSort, numberSort } from '../utils/sorter';
 
@@ -92,6 +97,11 @@
       },
       decrementItem(item) {
         this.editItem({ ...item, amount: item.amount - 1 })
+      },
+      deleteItem(item) {
+        const itemId = item.itemId;
+        const locationId = item.location || this.location.id;
+        deleteItemAction(locationId, itemId).then(() => EventBus.$emit('reloadItems', locationId));
       },
       editItem(item) {
         const itemId = item.itemId;
@@ -148,29 +158,33 @@
     }
 
     .item-card {
-        .item-card__primary {
-            padding: 1rem;
+        .mdc-card__primary-action {
+            min-height: 115px;
 
-            .item-card__title {
-                margin: 0;
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
+            .item-card__primary {
+                padding: 1rem;
 
-                .amount {
-                    margin-left: 10px;
+                .item-card__title {
+                    margin: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    .amount {
+                        margin-left: 10px;
+                    }
                 }
-            }
-            .item-card__subtitle {
-                margin: 0;
-                color: $blackLighter;
+                .item-card__subtitle {
+                    margin: 0;
+                    color: $blackLighter;
+                }
+
             }
 
-        }
-
-        .item-card__secondary {
-            padding: 0 1rem 8px;
-            color: $greyDarker;
+            .item-card__secondary {
+                padding: 0 1rem 8px;
+                color: $greyDarker;
+            }
         }
 
         .mdc-card__action-icons {

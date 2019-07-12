@@ -6,7 +6,14 @@
               <span class="mdc-list-item__primary-text">{{loc.name}}</span>
               <span v-if="loc.description" class="mdc-list-item__secondary-text">{{loc.description}}</span>
             </span>
-            <span class="mdc-list-item__meta">{{loc.count || 0}}</span>
+            <div class="mdc-list-item__meta">
+                <span style="margin-right: 20px">{{loc.count || 0}}</span>
+                 <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon"
+                    title="Delete"
+                    @click.stop="deleteLocation(loc.id)">
+                     delete
+                 </a>
+            </div>
         </li>
     </ul>
 </template>
@@ -15,6 +22,8 @@
 
   import { MDCList } from '@material/list';
   import { MDCRipple } from '@material/ripple';
+  import EventBus from '../../services/event-bus';
+  import { deleteLocationAction } from '../../services/firebase';
 
   export default {
     name: "CategoryList",
@@ -30,6 +39,9 @@
       changeRoute(id) {
         this.$router.push({ name: 'CategoryItems', params: { id } });
       },
+      deleteLocation(locationId) {
+        deleteLocationAction(locationId).then(() => EventBus.$emit('reloadCategories'));
+      }
     },
     computed: {
       evaluatedLocations () {
@@ -50,5 +62,10 @@
     .mdc-list--avatar-list .mdc-list-item__graphic {
         background-color: rgba(0,0,0,.3);
         color: $white;
+    }
+
+    .mdc-list-item__meta {
+        display: flex;
+        align-items: center;
     }
 </style>

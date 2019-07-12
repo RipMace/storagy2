@@ -4,8 +4,8 @@
         <header class="mdc-top-app-bar mdc-top-app-bar--dense toolbar">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-                    <a @click="goBack" v-if="goBackRoute" class="material-icons mdc-top-app-bar__navigation-icon">arrow_back</a>
                     <a @click="openSidebar" class="material-icons mdc-top-app-bar__navigation-icon">menu</a>
+                    <a @click="goBack" v-if="goBackRoute" class="material-icons mdc-top-app-bar__navigation-icon">arrow_back</a>
                     <div class="mdc-text-field mdc-text-field--no-label">
                         <input
                             type="text"

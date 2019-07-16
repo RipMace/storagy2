@@ -27,7 +27,7 @@
                             <TextField v-model="name" placeholder="Nome" required type="text" field-id="name"/>
                             <TextAreaField v-model="description" placeholder="Descrizione" field-id="description" rows="3" />
                             <TextField v-model="amount" min="0" placeholder="Quantità" required type="number" field-id="amount"/>
-                            <TextField v-model="due" placeholder="Scadenza" required type="date" field-id="due"/>
+                            <TextField v-model="due" placeholder="Scadenza" type="date" field-id="due"/>
                             <SelectField v-model="location" :options="locationOptions" placeholder="Sezione" required :disabled="disableLocation" field-id="location"/>
                             <button type="submit" id="save-button" style="visibility: hidden">salva</button>
                         </form>

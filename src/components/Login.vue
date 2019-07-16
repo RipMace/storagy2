@@ -51,7 +51,6 @@
     methods: {
       login() {
         auth.signInWithEmailAndPassword(this.email, this.password).then((user) => {
-          console.log('signInWithEmailAndPassword', user);
           this.$router.replace('storagy/category');
         }).catch((err) => {
           // TODO alert utente non registrato da migliorare

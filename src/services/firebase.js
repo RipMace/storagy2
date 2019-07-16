@@ -77,7 +77,7 @@ export const addItemAction = (locId, newItem) => new Promise((resolve, reject) =
 export const editItemAction = (locId, itemId, editItem) => new Promise((resolve, reject) => {
   const uid = auth.currentUser.uid;
   stores.doc(uid).collection('location').doc(locId)
-    .collection('items').doc(itemId).update(editItem)
+    .collection('items').doc(itemId).set(editItem)
     .then(function(store) {
       resolve(store);
     }).catch(function (err) {

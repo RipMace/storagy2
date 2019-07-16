@@ -1,6 +1,6 @@
 <template>
     <div v-if="!loading">
-        <NoItems v-if="noItems"/>
+        <NoExpiredItems v-if="noItems" />
         <div v-else>
             <Toolbar
                 placeholder="Storagy"
@@ -23,7 +23,7 @@
 <script>
   import Toolbar from "../shared/Toolbar.vue";
   import Loading from "../shared/Loading.vue";
-  import NoItems from "./NoItems.vue";
+  import NoExpiredItems from "./NoExpiredItems.vue";
   import ItemsList from "./ItemsList.vue";
   import { checkDueDate } from '../../components/utils/checkDue';
   import EventBus from '../../services/event-bus';
@@ -36,7 +36,7 @@
     components: {
       Loading,
       Toolbar,
-      NoItems,
+      NoExpiredItems,
       ItemsList,
     },
     data() {
@@ -55,9 +55,8 @@
       getAllItems() {
         this.loading = true;
         getAllItemsAction().then((itemsList) => {
-          console.log(itemsList)
-          this.noItems = !itemsList.length;
-          this.itemsList = itemsList.filter((item) => checkDueDate(item.due));
+          this.itemsList = itemsList.filter((item) => item.due && checkDueDate(item.due));
+          this.noItems = !this.itemsList.length;
           this.loading = false;
         })
       },

@@ -51,7 +51,9 @@
         this.loading = true;
         getAllItemsAction().then((itemsList) => {
           this.noItems = !itemsList.length;
-          this.itemsList = itemsList.map((item) => (
+          this.itemsList = itemsList
+            .filter((item) => item.due)
+            .map((item) => (
             {
               start: item.due,
               end: item.due,

@@ -3,7 +3,7 @@
         <ul class="mdc-image-list-grid">
             <li class="mdc-image-list__item" tabindex="0" v-for="item in evaluatedItems">
                 <div class="mdc-card item-card">
-                    <div :class="['mdc-card__primary-action', 'mdc-ripple-upgraded', { 'on-due-date': checkDueDate(item.due) }]">
+                    <div :class="['mdc-card__primary-action', 'mdc-ripple-upgraded', { 'on-due-date': item.due && checkDueDate(item.due) }]">
                         <div class="item-card__primary">
                             <h2 class="item-card__title mdc-typography mdc-typography--headline6">
                                 {{item.name}}
@@ -12,7 +12,7 @@
                             </span>
                             </h2>
                             <h3 class="item-card__subtitle mdc-typography mdc-typography--subtitle2">
-                                Scadenza: {{moment(item.due).format('DD/MM/YYYY')}}
+                                {{item.due ? `Scadenza: ${moment(item.due).format('DD/MM/YYYY')}` : ''}}
                                 <br>
                                 {{showCategory ? `Sezione: ${item.locationName}` : ''}}
                             </h3>

@@ -1,6 +1,9 @@
 <template>
     <div v-if="!loading">
-        <NoExpiredItems v-if="noItems" />
+        <div v-if="noItems">
+            <ToolbarBase title="Lista in Scadenza" />
+            <NoExpiredItems />
+        </div>
         <div v-else>
             <Toolbar
                 placeholder="Storagy"
@@ -22,6 +25,7 @@
 
 <script>
   import Toolbar from "../shared/Toolbar.vue";
+  import ToolbarBase from "../shared/ToolbarBase.vue";
   import Loading from "../shared/Loading.vue";
   import NoExpiredItems from "./NoExpiredItems.vue";
   import ItemsList from "./ItemsList.vue";
@@ -36,6 +40,7 @@
     components: {
       Loading,
       Toolbar,
+      ToolbarBase,
       NoExpiredItems,
       ItemsList,
     },
@@ -55,7 +60,7 @@
       getAllItems() {
         this.loading = true;
         getAllItemsAction().then((itemsList) => {
-          this.itemsList = itemsList.filter((item) => item.due && checkDueDate(item.due));
+          this.itemsList = itemsList.filter((item) => item.due && checkDueDate(item.due) && item.amount);
           this.noItems = !this.itemsList.length;
           this.loading = false;
         })

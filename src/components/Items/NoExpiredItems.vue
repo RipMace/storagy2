@@ -33,6 +33,7 @@
         flex-direction: column;
         padding: 60px 0;
         text-align: center;
+        margin-top: 60px;
 
         .icon {
             background: whitesmoke;

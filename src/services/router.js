@@ -57,8 +57,8 @@ const router = new Router({
           component: AllItems,
         },
         {
-          path: 'expired-items',
-          name: 'ExpiredItems',
+          path: 'expired',
+          name: 'Expired',
           component: AllExpiredItems,
         },
         {

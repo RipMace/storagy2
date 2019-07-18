@@ -58,7 +58,15 @@
 
     .mdc-list-item {
         border-radius: 8px;
+
+        .mdc-list-item__primary-text {
+            margin-bottom: 0;
+        }
+        .mdc-list-item__secondary-text {
+            margin-top: -20px;
+        }
     }
+
     .mdc-list--avatar-list .mdc-list-item__graphic {
         background-color: rgba(0,0,0,.3);
         color: $white;

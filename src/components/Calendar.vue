@@ -52,7 +52,7 @@
         getAllItemsAction().then((itemsList) => {
           this.noItems = !itemsList.length;
           this.itemsList = itemsList
-            .filter((item) => item.due)
+            .filter((item) => item.due && item.amount)
             .map((item) => (
             {
               start: item.due,

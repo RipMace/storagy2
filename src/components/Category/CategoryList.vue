@@ -40,7 +40,10 @@
         this.$router.push({ name: 'CategoryItems', params: { id } });
       },
       deleteLocation(locationId) {
-        deleteLocationAction(locationId).then(() => EventBus.$emit('reloadCategories'));
+        const confirm = window.confirm(`Sei sicuro di eliminare la sezione? Eliminerai tutto il suo contenuto.`);
+        if (confirm) {
+          deleteLocationAction(locationId).then(() => EventBus.$emit('reloadCategories'));
+        }
       }
     },
     computed: {

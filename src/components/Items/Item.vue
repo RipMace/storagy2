@@ -1,5 +1,5 @@
 <template>
-    <div class="mdc-card item-card" @click="triggerCollapse">
+    <div :id="id" class="mdc-card item-card" @click="triggerCollapse">
         <div :class="['mdc-card__primary-action', 'mdc-ripple-upgraded', { 'on-due-date': item.due && checkDueDate(item.due), 'no-amount': item.amount === 0 }]">
             <div class="item-card__primary">
                 <h2 class="item-card__title mdc-typography mdc-typography--headline6">
@@ -25,21 +25,17 @@
                         <span class="mdc-button__label">Modifica</span>
                     </button>
                 </CreateItem>
-                <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon"
-                   title="Delete"
-                   @click="deleteItem(item)">
-                    delete
-                </a>
+                <Delete :name="item.name" :onDelete="() => deleteItem(item)" />
             </div>
             <div class="mdc-card__action-icons">
                 <a class="material-icons mdc-icon-button mdc-card__action mdc-card__action--icon add"
                    title="Add"
-                   @click="incrementItem(item)">
+                   @click.stop="incrementItem(item)">
                     add
                 </a>
                 <a :class="['material-icons mdc-icon-button mdc-card__action mdc-card__action--icon remove', { 'remove-disabled' : item.amount === 0 }]"
                    title="Remove"
-                   @click="decrementItem(item)">
+                   @click.stop="decrementItem(item)">
                     remove
                 </a>
             </div>
@@ -50,7 +46,9 @@
 <script>
   import { MDCRipple } from '@material/ripple';
   import moment from 'moment';
+  import uniqid from 'uniqid';
   import CreateItem from '../actions/CreateItem.vue';
+  import Delete from '../actions/Delete.vue';
   import EventBus from '../../services/event-bus';
   import { editItemAction, deleteItemAction } from '../../services/firebase';
   import { checkDueDate } from '../utils/checkDue';
@@ -63,18 +61,20 @@
       location: Object,
     },
     components: {
+      Delete,
       CreateItem
     },
     data() {
       return {
+        id: uniqid(),
         collapse: false,
       }
     },
     mounted() {
-      const ripples = [].map.call(document.querySelectorAll('.mdc-button'), function(el) {
+      const ripples = [].map.call(document.querySelectorAll(`#${this.id}.mdc-button`), function(el) {
         return new MDCRipple(el);
       });
-      const iconButtonRipple = [].map.call(document.querySelectorAll('.mdc-icon-button'), function(el) {
+      const iconButtonRipple = [].map.call(document.querySelectorAll(`#${this.id}.mdc-icon-button`), function(el) {
         const iconButtonRipple = new MDCRipple(el);
         iconButtonRipple.unbounded = true;
         return iconButtonRipple

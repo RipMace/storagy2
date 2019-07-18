@@ -1,14 +1,14 @@
 <template>
     <div>
-        <div @click="open">
+        <div @click.stop="open">
             <slot></slot>
         </div>
         <div class="mdc-dialog mdc-dialog-full"
              :id="id"
              role="dialog"
              aria-modal="true"
-             aria-labelledby="create storage"
-             aria-describedby="create storage">
+             aria-labelledby="create location"
+             aria-describedby="create location">
             <div class="mdc-dialog__container">
                 <div class="mdc-dialog__surface">
                     <header class=" mdc-top-app-bar mdc-top-app-bar--short">

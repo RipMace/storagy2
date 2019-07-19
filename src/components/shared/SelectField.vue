@@ -44,6 +44,7 @@
 
 <style scoped lang="scss">
     @import "../../variables";
+    @import "~@material/select/mdc-select";
 
     .mdc-select {
         width: 100%;

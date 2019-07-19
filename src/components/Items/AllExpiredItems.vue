@@ -58,7 +58,6 @@
     },
     methods: {
       getAllItems() {
-        this.loading = true;
         getAllItemsAction().then((itemsList) => {
           this.itemsList = itemsList.filter((item) => item.due && checkDueDate(item.due) && item.amount);
           this.noItems = !this.itemsList.length;

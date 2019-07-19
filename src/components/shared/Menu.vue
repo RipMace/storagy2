@@ -80,6 +80,7 @@
 
 <style scoped lang="scss">
     @import "../../variables";
+    @import "~@material/drawer/mdc-drawer";
 
     .mdc-drawer {
         top: 0;

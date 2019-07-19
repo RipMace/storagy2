@@ -55,7 +55,6 @@
     },
     methods: {
       getAllItems() {
-        this.loading = true;
         getAllItemsAction().then((itemsList) => {
           this.noItems = !itemsList.length;
           this.itemsList = itemsList;

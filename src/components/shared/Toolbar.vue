@@ -101,6 +101,8 @@
 
 <style scoped lang="scss">
     @import "../../variables.scss";
+    @import "~@material/menu-surface/mdc-menu-surface";
+    @import "~@material/menu/mdc-menu";
 
     .toolbar {
         display: flex;

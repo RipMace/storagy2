@@ -37,6 +37,7 @@
 
 <style scoped lang="scss">
     @import "../.././variables.scss";
+    @import "~@material/switch/mdc-switch";
 
     .toggle-field-wrapper {
         margin-top: 20px;

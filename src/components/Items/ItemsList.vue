@@ -38,7 +38,7 @@
       evaluatedItems() {
        const sorting = { ...this.sort };
         const items = this.items
-          .filter((item) => item.name.includes(this.textFilter));
+          .filter((item) => item.name.toLowerCase().includes(this.textFilter.toLowerCase()));
         if (Object.keys(sorting).length) {
           if (sorting.type === 'String') {
             return stringSort(items, sorting.key)

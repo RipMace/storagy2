@@ -50,7 +50,7 @@
       evaluatedLocations () {
         return this.locations
           .map((loc) => ({ id: loc.id, ...loc.data() }))
-          .filter((loc) => loc.name.includes(this.textFilter));
+          .filter((loc) => loc.name.toLowerCase().includes(this.textFilter.toLowerCase()));
       }
     }
   }

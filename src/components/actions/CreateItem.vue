@@ -102,6 +102,11 @@
         this.dialog.open();
       },
       close() {
+        this.name = undefined;
+        this.description = undefined;
+        this.amount = undefined;
+        this.due =  undefined;
+        this.location = undefined;
         this.dialog.close();
       },
       closeAndReload() {

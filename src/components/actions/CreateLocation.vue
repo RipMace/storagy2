@@ -71,11 +71,11 @@
         this.dialog.open();
       },
       close() {
+        this.name = undefined;
+        this.desc = undefined;
         this.dialog.close();
       },
       closeAndReload() {
-        this.name = undefined;
-        this.desc = undefined;
         EventBus.$emit('reloadCategories');
         this.close()
       },
